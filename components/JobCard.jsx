@@ -30,7 +30,7 @@ export default function JobCard({ job }) {
 
       {/* Job details */}
       <div className="p-4 sm:p-5 relative bg-[#F6FFF8]">
-        <div className="absolute -top-10 right-2 bg-[#F6FFF8] px-2 py-1 rounded-lg text-xs sm:text-sm text-green-600 font-semibold">
+        <div className="absolute -top-10 right-2 bg-[#F6FFF8] px-2 py-1 rounded-t-lg text-xs sm:text-sm text-green-600 font-semibold">
           {job.deadline && <CountdownTimer deadline={job.deadline} />}
         </div>
 

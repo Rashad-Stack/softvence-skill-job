@@ -18,10 +18,12 @@ export default async function Home() {
             where you are skilled and prefer to join.
           </p>
 
-          {/* Designer Roles */}
-          <DesignerRole designerJobs={data.data} developer={false}/>
           {/* Developer Roles */}
           <DesignerRole designerJobs={data.data} developer={true}/>
+          
+          {/* Designer Roles */}
+          <DesignerRole designerJobs={data.data} developer={false}/>
+          
         </div>
       </section>
     </main>
