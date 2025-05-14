@@ -56,7 +56,7 @@ export default function JobCard({ job }) {
         {/* Action buttons */}
         <div className="flex justify-between items-center flex-wrap gap-2">
           <Link
-            href={`/job/${job.id}`}
+            href={`/job/${job.slug}`}
             className="text-green-700 font-medium underline hover:text-green-900 cursor-pointer">
             View Details
           </Link>

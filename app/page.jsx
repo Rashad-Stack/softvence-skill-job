@@ -2,7 +2,7 @@ import DesignerRole from "@/components/HomeComponets/DesignerRole";
 import axios from "axios";
 
 export default async function Home() {
-  const { data } = await axios.get('http://localhost:5000/api/v1/job/all')
+  const { data } = await axios.get('http://localhost:3000/api/v2/job/all')
 
   return (
     <main>
