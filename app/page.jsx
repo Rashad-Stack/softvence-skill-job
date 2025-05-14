@@ -1,6 +1,9 @@
 import DesignerRole from "@/components/HomeComponets/DesignerRole";
+import axios from "axios";
 
-export default function Home() {
+export default async function Home() {
+  const { data } = await axios.get('http://localhost:5000/api/v1/job/all')
+
   return (
     <main>
       <section>
@@ -16,9 +19,9 @@ export default function Home() {
           </p>
 
           {/* Designer Roles */}
-          <DesignerRole />
-
+          <DesignerRole designerJobs={data.data} developer={false}/>
           {/* Developer Roles */}
+          <DesignerRole designerJobs={data.data} developer={true}/>
         </div>
       </section>
     </main>

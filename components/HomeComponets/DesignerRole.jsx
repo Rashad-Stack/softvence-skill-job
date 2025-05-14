@@ -1,16 +1,20 @@
 "use client";
 
-import { useRef } from "react";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import "swiper/css";
 import "swiper/css/navigation";
+import React from 'react'
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import JobCard from "../JobCard";
 
-export default function DesignerRole() {
+export default function DesignerRole({ designerJobs, developer }) {
+
   const swiperRef = useRef(null);
-  const designerJobs = [{}];
+
+  // const designerJobs = [{}];
+  // console.log(designerJobs)
 
   if (designerJobs.length === 0) {
     return (
@@ -23,21 +27,27 @@ export default function DesignerRole() {
   return (
     <div className="lg:mt-10 mt-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="lg:text-[32px] text-[22px] font-pop font-semibold lg:mb-4">
-          Designer Roles
+        {
+          developer ? <h2 className="lg:text-[32px] text-[22px] font-pop font-semibold lg:mb-4">
+          Developer Roles
+        </h2> : <h2 className="lg:text-[32px] text-[22px] font-pop font-semibold lg:mb-4">
+          Designer Roles 
         </h2>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => swiperRef.current?.slidePrev()}
-            className="lg:w-12 lg:h-12 w-9 h-9 flex items-center justify-center rounded-full border border-[#3C8303] text-[#3C8303] hover:bg-[#3C8303] hover:text-white transition">
-            <FiArrowLeft size={24} />
-          </button>
-          <button
-            onClick={() => swiperRef.current?.slideNext()}
-            className="lg:w-12 lg:h-12 w-9 h-9 flex items-center justify-center rounded-full border border-[#3C8303] text-[#3C8303] hover:bg-[#3C8303] hover:text-white transition">
-            <FiArrowRight size={24} />
-          </button>
-        </div>
+        }
+        {
+          designerJobs.length >= 4 && <div className="flex items-center gap-4">
+            <button
+              onClick={() => swiperRef.current?.slidePrev()}
+              className="lg:w-12 lg:h-12 w-9 h-9 flex items-center justify-center rounded-full border border-[#3C8303] text-[#3C8303] hover:bg-[#3C8303] hover:text-white transition">
+              <FiArrowLeft size={24} />
+            </button>
+            <button
+              onClick={() => swiperRef.current?.slideNext()}
+              className="lg:w-12 lg:h-12 w-9 h-9 flex items-center justify-center rounded-full border border-[#3C8303] text-[#3C8303] hover:bg-[#3C8303] hover:text-white transition">
+              <FiArrowRight size={24} />
+            </button>
+          </div>
+        }
       </div>
       <Swiper
         modules={[Navigation]}
@@ -51,11 +61,13 @@ export default function DesignerRole() {
           1280: { slidesPerView: 4 },
         }}
         className="lg:py-10">
-        {designerJobs.map((job) => (
-          <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
-            <JobCard job={job} />
-          </SwiperSlide>
-        ))}
+        {designerJobs.map((job) => {
+          if (developer ? job.category !== "UI_UX" : job.category === "UI_UX") {
+          return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
+              <JobCard job={job} />
+            </SwiperSlide>
+          }
+        })}
       </Swiper>
     </div>
   );

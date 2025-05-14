@@ -1,23 +1,22 @@
 import Link from "next/link";
-import arrow from "../assets/images/arrow.png";
-import dateIcon from "../assets/images/date.png";
 import lara from "../assets/images/lara.png";
 import CountdownTimer from "./CountdownTimer";
+import Image from "next/image";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { IoCalendarOutline } from "react-icons/io5";
 
-export default function JobCard() {
-  const job = {
-    id: 1,
-    title: "Laravel Developer",
-    company: "Laravel",
-    location: "Remote",
-    deadline: "2023-09-30",
-  };
+export default function JobCard({ job }) {
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-[362px]">
       <div className="relative">
         {/* Job image */}
-        <img src={lara} alt="" />
+        <Image
+          src={lara}
+          alt="job image"
+          className="object-contain"
+          priority
+        />
 
         {/* Category badge */}
         {job.category && (
@@ -40,14 +39,14 @@ export default function JobCard() {
         </h3>
 
         <p className="text-sm text-[#837E7E] font-normal font-pop mb-2">
-          {job.jobType?.replace("_", " ")} | {job.jobLevel?.replace("_", " ")} |
+          {job.jobNature?.replace("_", " ")} | {job.jobType?.replace("_", " ")} | {job.jobLevel?.replace("_", " ")} |
           <span className="text-[#151515] font-medium ml-1 capitalize">
-            {job.shift?.toLowerCase()}
+            {job.shift?.toLowerCase()} Shift
           </span>
         </p>
 
         <div className="flex items-center text-sm mb-4 gap-1 text-[#837E7E] font-pop">
-          <img src={dateIcon} alt="calendar" className="w-4 h-4" />
+          <IoCalendarOutline />
           Deadline:
           <span className="ml-1">
             {new Date(job.deadline).toLocaleDateString()}
@@ -65,9 +64,9 @@ export default function JobCard() {
           <a
             href={job.googleForm}
             target="_blank"
-            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 flex gap-2 items-center">
+            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 flex gap-1.5 items-center">
             Apply Now
-            <img src={arrow} alt="arrow" className="w-4 h-4" />
+            <FaArrowRightLong className="-rotate-45 text-sm"/>
           </a>
         </div>
       </div>

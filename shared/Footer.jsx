@@ -3,7 +3,6 @@
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
 import Link from 'next/link';
 import bg from '@/assets/images/BG.png';
-import Image from 'next/image';
 
 export default function Footer() {
 

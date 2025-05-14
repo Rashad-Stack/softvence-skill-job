@@ -12,11 +12,13 @@ export default function CountdownTimer({ deadline }) {
         return (
           <div className="flex flex-col items-center space-y-1 sm:space-y-2">
             <div className="flex items-center gap-1 sm:gap-2">
-              <TimeGroup label="Days" value={days} />
+              <TimeGroup label="days" value={days} />
               <Colon />
-              <TimeGroup label="Hours" value={hours} />
+              <TimeGroup label="hr" value={hours} />
               <Colon />
-              <TimeGroup label="Minute" value={minutes} />
+              <TimeGroup label="min" value={minutes} />
+              <Colon />
+              <TimeGroup label="s" value={seconds} />
             </div>
           </div>
         );
@@ -30,22 +32,23 @@ const TimeGroup = ({ label, value }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex gap-[2px] sm:gap-1">
+      <div className="flex gap-[2px] sm:gap-1 items-center">
         {digits.map((digit, index) => (
           <div
             key={index}
-            className="w-5 h-6 sm:w-6 sm:h-8 border border-green-500 rounded-md flex items-center justify-center text-[#F5AB0D] text-sm sm:text-lg font-semibold">
+            className="w-1 h-6 sm:w-1 sm:h-8 rounded-md flex items-center justify-center text-[#F5AB0D] text-sm sm:text-xs font-semibold">
             {digit}
           </div>
         ))}
+        <span className="text-[9px] sm:text-[10px] font-pop text-[#837E7E] mt-1">
+              {label}
+            </span>
       </div>
-      <span className="text-[9px] sm:text-[10px] font-pop text-[#837E7E] mt-1">
-        {label}
-      </span>
+
     </div>
   );
 };
 
 const Colon = () => (
-  <div className="text-[#F5AB0D] font-semibold text-lg sm:text-xl px-1">:</div>
+  <div className="text-[#F5AB0D] font-semibold text-sm sm:text-base px-1">:</div>
 );
