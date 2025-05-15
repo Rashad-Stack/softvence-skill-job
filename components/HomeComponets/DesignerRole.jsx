@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 import React from 'react'
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { useRef } from "react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import JobCard from "../JobCard";
 
@@ -26,10 +26,10 @@ export default function DesignerRole({ designerJobs, developer }) {
       <div className="flex justify-between items-center mb-4">
         {
           developer ? <h2 className="lg:text-[32px] text-[22px] font-pop font-semibold lg:mb-4">
-          Developer Roles
-        </h2> : <h2 className="lg:text-[32px] text-[22px] font-pop font-semibold lg:mb-4">
-          Designer Roles 
-        </h2>
+            Developer Roles
+          </h2> : <h2 className="lg:text-[32px] text-[22px] font-pop font-semibold lg:mb-4">
+            Designer Roles
+          </h2>
         }
         {
           designerJobs.length >= 4 && <div className="flex items-center gap-4">
@@ -47,10 +47,15 @@ export default function DesignerRole({ designerJobs, developer }) {
         }
       </div>
       <Swiper
-        modules={[Navigation]}
+        modules={[Navigation, Autoplay]}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={20}
         slidesPerView={2}
+        loop={true} // Enables continuous loop
+        autoplay={{
+          delay: 3000, // 3 seconds
+          disableOnInteraction: false,
+        }}
         breakpoints={{
           320: { slidesPerView: 1 },
           768: { slidesPerView: 2 },
@@ -58,9 +63,9 @@ export default function DesignerRole({ designerJobs, developer }) {
           1280: { slidesPerView: 4 },
         }}
         className="lg:py-10">
-        {designerJobs.sort((a, b)=> new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
+        {designerJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
           if (developer ? job.category !== "UI UX" : job.category === "UI UX") {
-          return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
+            return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
               <JobCard job={job} />
             </SwiperSlide>
           }

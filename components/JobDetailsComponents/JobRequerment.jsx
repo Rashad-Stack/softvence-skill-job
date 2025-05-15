@@ -1,7 +1,6 @@
 "use client";
 import React from 'react'
 import Link from 'next/link';
-import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { TbCalendarMonthFilled } from "react-icons/tb";
 import { TfiAlarmClock } from "react-icons/tfi";
@@ -47,7 +46,7 @@ We are seeking a UI/UX Designer to join our team at Oilyo. In this role, you wil
 
 `
 
-export default function JobRequerment({ slug }) {
+export default function JobRequerment({ slug, singleJob }) {
 
 
 
@@ -64,8 +63,8 @@ export default function JobRequerment({ slug }) {
                     </Link>
                 </button>
                 {/* <Link className="text-sm sm:text-base bg-[#038317] text-white px-4 py-2 rounded-lg hover:bg-[#40854a] transition font-pop font-semibold w-full" href="" aria-label="Apply Job">
-                                Apply Now
-                            </Link> */}
+                    Apply Now
+                </Link> */}
                 <p className='text-[#636363] text-center text-base font-normal leading-[132%] tracking[-0.32px] mt-8 mb-6'>Next, you'll face an assessment to proceed. Apply for one job at a time and prepare well.</p>
                 <p className='text-[#484848] text-center text-[12px] font-normal leading-[132%] tracking[-0.24px]'>* By applying for this job listing, you agree to our Data</p>
             </div>
@@ -93,38 +92,40 @@ export default function JobRequerment({ slug }) {
                             <div className='flex flex-col items-center'>
                                 <TbCalendarMonthFilled className='text-[#038317] size-10 p-2 rounded-full bg-radial-[at_25%_25%] bg-linear-to-r from-[#EFFFF2] to-[#A4E8AE] to-75% mb-2' />
                                 <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Job Posted</p>
-                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>2 Hours ago</p>
+                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>{new Date(singleJob.createdAt).toLocaleDateString()}</p>
                             </div>
                             <div className='flex flex-col items-center'>
                                 <TfiAlarmClock className='text-[#038317] size-10 p-2  rounded-full bg-radial-[at_25%_25%] bg-linear-to-r from-[#EFFFF2] to-[#A4E8AE] to-75% mb-2' />
                                 <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Job Expire</p>
-                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>Full Time</p>
+                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>{new Date(singleJob.deadline).toLocaleDateString()}</p>
                             </div>
                             <div className='flex flex-col items-center'>
                                 <MdOutlineContentPasteSearch className='text-[#038317] size-10 p-2  rounded-full bg-radial-[at_25%_25%] bg-linear-to-r from-[#EFFFF2] to-[#A4E8AE] to-75% mb-2' />
-                                <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Job Role</p>
-                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>UI/UX Designer</p>
+                                <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Job Type</p>
+                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>{singleJob.jobType?.replace('_', " ")}</p>
                             </div>
                             <div className='flex flex-col items-center'>
                                 <LuUserRound className='text-[#038317] size-10 p-2  rounded-full bg-radial-[at_25%_25%] bg-linear-to-r from-[#EFFFF2] to-[#A4E8AE] to-75% mb-2' />
+                                <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Job Role</p>
+                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>{singleJob.title}</p>
+                            </div>
+                            <div className='flex flex-col items-center'>
+                                
+                                <PiStudent className='text-[#038317] size-10 p-2  rounded-full bg-radial-[at_25%_25%] bg-linear-to-r from-[#EFFFF2] to-[#A4E8AE] to-75% mb-2' />
                                 <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Education</p>
                                 <p className='text-[#121212] text-[12px] font-medium leading-normal'>Bachelor Degree</p>
                             </div>
                             <div className='flex flex-col items-center'>
-                                <PiStudent className='text-[#038317] size-10 p-2  rounded-full bg-radial-[at_25%_25%] bg-linear-to-r from-[#EFFFF2] to-[#A4E8AE] to-75% mb-2' />
-                                <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Experience</p>
-                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>Entry-Level</p>
-                            </div>
-                            <div className='flex flex-col items-center'>
                                 <TiDocumentText className='text-[#038317] size-10 p-2  rounded-full bg-radial-[at_25%_25%] bg-linear-to-r from-[#EFFFF2] to-[#A4E8AE] to-75% mb-2' />
-                                <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Total Vacancies</p>
-                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>20-30</p>
+                                <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Experience</p>
+                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>{singleJob.jobLevel?.replace("_", " ")}</p>
                             </div>
                             <div className='flex flex-col items-center'>
                                 <TbUsersGroup className='text-[#038317] size-10 p-2  rounded-full bg-radial-[at_25%_25%] bg-linear-to-r from-[#EFFFF2] to-[#A4E8AE] to-75% mb-2' />
-                                <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Job Posted</p>
-                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>2 Hours ago</p>
+                                <p className='text-[#636363] text-[12px] font-medium leading-normal mb-0.5'>Total Vacancies</p>
+                                <p className='text-[#121212] text-[12px] font-medium leading-normal'>{singleJob.numberOfHiring}</p>
                             </div>
+                            
                         </div>
                     </div>
 
