@@ -13,9 +13,6 @@ export default function DesignerRole({ designerJobs, developer }) {
 
   const swiperRef = useRef(null);
 
-  // const designerJobs = [{}];
-  // console.log(designerJobs)
-
   if (designerJobs.length === 0) {
     return (
       <div className="text-center py-10">
@@ -61,8 +58,8 @@ export default function DesignerRole({ designerJobs, developer }) {
           1280: { slidesPerView: 4 },
         }}
         className="lg:py-10">
-        {designerJobs.map((job) => {
-          if (developer ? job.category !== "UI_UX" : job.category === "UI_UX") {
+        {designerJobs.sort((a, b)=> new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
+          if (developer ? job.category !== "UI UX" : job.category === "UI UX") {
           return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
               <JobCard job={job} />
             </SwiperSlide>
