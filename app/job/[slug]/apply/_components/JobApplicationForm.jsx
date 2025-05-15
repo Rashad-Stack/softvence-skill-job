@@ -2,15 +2,18 @@
 
 import axiosInstance from "@/lib/axios";
 import { useForm } from "react-hook-form";
+import CvUpload from "./CvUpload";
 
 export default function JobApplicationForm({ slug }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log("formdata", data)
     try {
       const formData = new FormData();
       formData.append("name", data.name);
@@ -102,7 +105,10 @@ export default function JobApplicationForm({ slug }) {
         </div>
       </div>
 
-      <div className="flex flex-col">
+      {/* File Upload */}
+      <CvUpload register={register} errors={errors} setValue={setValue} />
+
+      {/* <div className="flex flex-col">
         <label className="mb-1 font-medium text-gray-700">CV/Resume *</label>
         <input
           type="file"
@@ -118,7 +124,7 @@ export default function JobApplicationForm({ slug }) {
         <small className="text-gray-500">
           Supported formats: PDF, DOC, DOCX — Max 10MB
         </small>
-      </div>
+      </div> */}
 
       <div className="flex flex-col">
         <label className="mb-1 font-medium text-gray-700">
@@ -150,10 +156,14 @@ export default function JobApplicationForm({ slug }) {
 
       <button
         type="submit"
-        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition"
+        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition cursor-pointer"
       >
         Submit Application
       </button>
     </form>
   );
 }
+
+
+
+

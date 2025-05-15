@@ -63,7 +63,7 @@ export default function JobCard({ job }) {
           </Link>
 
           <Link
-            href={`/job/${job?.slug}/form`}
+            href={`/job/${job?.slug}/apply/${job?.id}`}
             className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 flex gap-1.5 items-center">
             Apply Now
             <FaArrowRightLong className="-rotate-45 text-sm"/>
