@@ -3,6 +3,7 @@
 import axiosInstance from "@/lib/axios";
 import { useForm } from "react-hook-form";
 import CvUpload from "./CvUpload";
+import { toast } from "react-toastify";
 
 export default function JobApplicationForm({ slug }) {
   const {
@@ -13,26 +14,28 @@ export default function JobApplicationForm({ slug }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("formdata", data)
-    try {
-      const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("email", data.email);
-      formData.append("phone", data.phone);
-      formData.append("salary", data.salary);
-      formData.append("github", data.github);
-      formData.append("others", data.others || "");
-      formData.append("resume", data.resume[0]); // FileList → File
+    console.log("data", data)
+  try {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("salary", data.salary);
+    formData.append("github", data.github);
+    formData.append("others", data.others || "");
+    formData.append("resume", data.resume[0]);
 
-      const response = await axiosInstance.post("/post", formData);
+    const response = await axiosInstance.post("/post", formData);
 
-      console.log("Upload Success:", response.data);
-      alert("Application submitted successfully!");
-    } catch (error) {
-      console.error("Upload Error:", error);
-      alert("Failed to submit application.");
-    }
-  };
+    console.log("Upload Success:", response.data);
+    toast.success("Application submitted successfully!");
+  } catch (error) {
+    console.error("Upload Error:", error);
+    toast.error(
+      error?.response?.data?.message || "Failed to submit application."
+    );
+  }
+};
 
   return (
     <form
@@ -107,24 +110,6 @@ export default function JobApplicationForm({ slug }) {
 
       {/* File Upload */}
       <CvUpload register={register} errors={errors} setValue={setValue} />
-
-      {/* <div className="flex flex-col">
-        <label className="mb-1 font-medium text-gray-700">CV/Resume *</label>
-        <input
-          type="file"
-          accept=".pdf,.doc,.docx"
-          {...register("resume", { required: "Resume is required" })}
-          className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        {errors.resume && (
-          <span className="text-sm text-red-500 mt-1">
-            {errors.resume.message}
-          </span>
-        )}
-        <small className="text-gray-500">
-          Supported formats: PDF, DOC, DOCX — Max 10MB
-        </small>
-      </div> */}
 
       <div className="flex flex-col">
         <label className="mb-1 font-medium text-gray-700">

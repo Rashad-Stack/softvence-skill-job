@@ -48,7 +48,6 @@ const CvUpload = ({ register, errors, setValue }) => {
         >
           <IoCloudUploadOutline className="w-10 h-10 mx-auto text-gray-400 mb-2" />
           <p className="font-semibold text-gray-700">Upload a File</p>
-          <p className="text-sm text-gray-500">Drag and drop files here</p>
         </div>
       ) : (
         <div className="flex items-center border rounded-lg p-3 mt-2 justify-between bg-white shadow-sm">
