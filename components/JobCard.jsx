@@ -6,7 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 
 export default function JobCard({ job }) {
-  console.log("job", job)
+  // console.log("job", job.category.name.toLowerCase())
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-[362px]">
@@ -15,7 +15,7 @@ export default function JobCard({ job }) {
         <Image
           src={lara}
           alt="job image"
-          className="object-contain"
+          className="object-contain w-full"
           priority
         />
 

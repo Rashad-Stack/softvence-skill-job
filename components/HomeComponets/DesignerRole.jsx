@@ -63,13 +63,26 @@ export default function DesignerRole({ designerJobs, developer }) {
           1280: { slidesPerView: 4 },
         }}
         className="lg:py-10">
-        {designerJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
-          if (developer ? job.category !== "UI UX" : job.category === "UI UX") {
-            return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
-              <JobCard job={job} />
-            </SwiperSlide>
-          }
-        })}
+
+        {
+          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('developer')).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).map((job) => {
+            if (developer) {
+              return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
+                <JobCard job={job} />
+              </SwiperSlide>
+            }
+          })
+        }
+        {
+          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('designer')).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).map((job) => {
+            if (!developer) {
+              return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
+                <JobCard job={job} />
+              </SwiperSlide>
+            }
+          })
+        }
+
       </Swiper>
     </div>
   );

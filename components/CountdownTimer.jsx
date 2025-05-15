@@ -11,7 +11,7 @@ export default function CountdownTimer({ deadline }) {
 
         return (
           <div className="flex flex-col items-center space-y-1 sm:space-y-2">
-            <div className="flex items-center gap-1 sm:gap-2">
+            <div className="flex items-center">
               <TimeGroup label="days" value={days} />
               <Colon />
               <TimeGroup label="hr" value={hours} />
@@ -32,11 +32,11 @@ const TimeGroup = ({ label, value }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex gap-[2px] sm:gap-1 items-center">
+      <div className="flex items-center gap-[2px] sm:gap-1 ">
         {digits.map((digit, index) => (
           <div
             key={index}
-            className="w-1 h-6 sm:w-1 sm:h-8 rounded-md flex items-center justify-center text-[#F5AB0D] text-sm sm:text-xs font-semibold">
+            className="w-1 sm:w-1 h-[33px] rounded-md flex items-center justify-center text-[#F5AB0D] text-sm sm:text-xs font-semibold">
             {digit}
           </div>
         ))}
