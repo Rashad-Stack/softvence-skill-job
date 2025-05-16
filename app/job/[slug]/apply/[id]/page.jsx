@@ -1,7 +1,8 @@
 import JobApplicationForm from "../_components/JobApplicationForm";
 
-export default function JobFormPage({ params }) {
-  const { slug } = params;
+export default async function JobFormPage({ params }) {
+  const {slug, id } = await params;
+  console.log( id)
 
   return (
     <div className="container mx-auto max-w-4xl py-10 px-4 text-gray-800">
@@ -11,7 +12,7 @@ export default function JobFormPage({ params }) {
       </h1>
 
       {/* Application Form */}
-      <JobApplicationForm slug={slug} />
+      <JobApplicationForm id={id}/>
     </div>
   );
 }

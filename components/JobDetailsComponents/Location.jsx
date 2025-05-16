@@ -4,7 +4,7 @@ import target from '../../assets/images/Target.png'
 
 export default function Location() {
     return (
-        <section className='container mx-auto md:mt-[80px] p-2 md:p-0'>
+        <section className='container mx-auto md:mt-[80px] p-2 md:p-2 lg:p-2'>
             <div className='flex justify-between items-end mb-6'>
                 <div>
                     <h3 className='text-[#121212] text-[24px] font-medium leading-normal'>Location</h3>

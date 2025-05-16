@@ -47,7 +47,7 @@ We are seeking a UI/UX Designer to join our team at Oilyo. In this role, you wil
 
 export default function JobRequerment({ slug, singleJob }) {
   return (
-    <section className="mt-5 container mx-auto lg:relative p-2 md:p-0">
+    <section className="mt-5 container mx-auto lg:relative p-2 md:p-2 lg:p-2">
       {/* apply part */}
       <div className="bg-[#fafffb] p-8 max-w-[488px] mx-auto rounded-3xl lg:absolute right-0 -top-40 border border-[#E1F3E4]">
         <p className="text-[#484848] text-base font-normal leading-[132%] tracking[-0.32px] mb-6">
@@ -98,7 +98,7 @@ export default function JobRequerment({ slug, singleJob }) {
               ),
             }}
           >
-            {jobDescription}
+            {singleJob.description}
           </ReactMarkdown>
         </div>
 

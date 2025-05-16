@@ -51,9 +51,9 @@ export default function DesignerRole({ designerJobs, developer }) {
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={20}
         slidesPerView={2}
-        loop={true} // Enables continuous loop
+        loop={true}
         autoplay={{
-          delay: 3000, // 3 seconds
+          delay: 2000,
           disableOnInteraction: false,
         }}
         breakpoints={{
@@ -65,7 +65,7 @@ export default function DesignerRole({ designerJobs, developer }) {
         className="lg:py-10">
 
         {
-          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('developer')).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).map((job) => {
+          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('developer')).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
             if (developer) {
               return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
                 <JobCard job={job} />
@@ -74,7 +74,7 @@ export default function DesignerRole({ designerJobs, developer }) {
           })
         }
         {
-          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('designer')).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).map((job) => {
+          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('designer')).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
             if (!developer) {
               return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
                 <JobCard job={job} />
