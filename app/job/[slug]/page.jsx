@@ -7,8 +7,7 @@ import axiosInstance from '@/lib/axios';
 export default async function JobDetails({ params }) {
     const { slug } = await params;
     const singleJobData = await axiosInstance.get(`/job/slug/${slug}`);
-    const singleJob = singleJobData.data.data
-    console.log(singleJob)
+    const singleJob = singleJobData.data.data;
 
     return (
         <main className='mt-[77px] my-14'>

@@ -2,26 +2,28 @@
 
 import axiosInstance from "@/lib/axios";
 import { useForm } from "react-hook-form";
-import CvUpload from "./CvUpload";
 import { toast } from "react-toastify";
 
 export default function JobApplicationForm({ id }) {
+
+
   const {
     register,
     handleSubmit,
     setValue,
+    reset ,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("data", data)
+
     try {
       const formData = new FormData();
       formData.append("jobId", id);
       formData.append("fullName", data.name);
       formData.append("email", data.email);
       formData.append("phoneNumber", data.phone);
-      formData.append("ExpectSalary", data.salary);
+      formData.append("ExpectSalary", parseInt(data.salary));
       formData.append("githubUrl", data.github);
       formData.append("cpProfile", data.others || "");
       formData.append("cv", data.resume);
@@ -30,6 +32,7 @@ export default function JobApplicationForm({ id }) {
 
       console.log("Upload Success:", response.data);
       toast.success("Application submitted successfully!");
+      reset();
     } catch (error) {
       console.error("Upload Error:", error);
       toast.error(
@@ -43,7 +46,7 @@ export default function JobApplicationForm({ id }) {
       onSubmit={handleSubmit(onSubmit)}
       className="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto space-y-6 border border-gray-200"
     >
-      <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">
         Job Application Form
       </h2>
 
@@ -116,7 +119,7 @@ export default function JobApplicationForm({ id }) {
         <label className="mb-1 font-medium text-gray-700">
           Upload your CV <span className="text-red-500">*</span>
         </label>
-        <small className="mt-2 mb-1 text-red-400">
+        <small className="mt-2 mb-1 text-[#038317]">
           Due to security concerns, please upload your CV to your Google Drive and set the sharing permissions to public. Then, share the public link with us. Please note that if your CV link is not publicly accessible, your application will not be considered.
         </small>
         <input

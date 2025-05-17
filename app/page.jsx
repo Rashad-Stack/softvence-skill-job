@@ -1,10 +1,8 @@
 import DesignerRole from "@/components/HomeComponets/DesignerRole";
 import axiosInstance from "@/lib/axios";
-import axios from "axios";
 
 export default async function Home() {
   const { data } = await axiosInstance.get("/job/all");
-  // const { data } = await axios.get("http://localhost:5000/api/v2/job/all");
 
   return (
     <main>

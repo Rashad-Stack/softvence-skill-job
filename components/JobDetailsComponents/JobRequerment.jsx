@@ -46,6 +46,7 @@ We are seeking a UI/UX Designer to join our team at Oilyo. In this role, you wil
 `;
 
 export default function JobRequerment({ slug, singleJob }) {
+  // console.log(slug, singleJob.id)
   return (
     <section className="mt-5 container mx-auto lg:relative p-2 md:p-2 lg:p-2">
       {/* apply part */}
