@@ -11,7 +11,7 @@ export default function JobApplicationForm({ id }) {
     register,
     handleSubmit,
     setValue,
-    reset ,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -43,7 +43,7 @@ export default function JobApplicationForm({ id }) {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit)} noValidate
       className="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto space-y-6 border border-gray-200"
     >
       <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">
@@ -55,7 +55,12 @@ export default function JobApplicationForm({ id }) {
           <label className="mb-1 font-medium text-gray-700">Full Name <span className="text-red-500">*</span></label>
           <input
             type="text"
-            {...register("name", { required: "Name is required" })}
+            {...register("name", {
+              required: "Name is required", minLength: {
+                value: 3,
+                message: "Name must be at least 3 characters",
+              },
+            })}
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {errors.name && (
@@ -69,7 +74,12 @@ export default function JobApplicationForm({ id }) {
           <label className="mb-1 font-medium text-gray-700">Email <span className="text-red-500">*</span></label>
           <input
             type="email"
-            {...register("email", { required: "Email is required" })}
+            {...register("email", {
+              required: "Email is required", pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Enter a valid email address",
+              },
+            })}
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {errors.email && (
@@ -85,7 +95,12 @@ export default function JobApplicationForm({ id }) {
           </label>
           <input
             type="tel"
-            {...register("phone", { required: "Phone number is required" })}
+            {...register("phone", {
+              required: "Phone number is required", pattern: {
+                value: /^[0-9]{11,15}$/,
+                message: "Enter a valid phone number",
+              },
+            })}
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {errors.phone && (
@@ -101,7 +116,10 @@ export default function JobApplicationForm({ id }) {
           </label>
           <input
             type="text"
-            {...register("salary", { required: "Salary is required" })}
+            {...register("salary", {
+              required: "Salary is required", validate: (value) =>
+                !isNaN(value) && parseInt(value) > 0 || "Enter a valid number",
+            })}
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {errors.salary && (
@@ -119,12 +137,17 @@ export default function JobApplicationForm({ id }) {
         <label className="mb-1 font-medium text-gray-700">
           Upload your CV <span className="text-red-500">*</span>
         </label>
-        <small className="mt-2 mb-1 text-[#038317]">
+        <small className="mt-2 mb-1 text-yellow-500">
           Due to security concerns, please upload your CV to your Google Drive and set the sharing permissions to public. Then, share the public link with us. Please note that if your CV link is not publicly accessible, your application will not be considered.
         </small>
         <input
           type="url"
-          {...register("resume", { required: "Resume is required" })}
+          {...register("resume", {
+            required: "Resume is required", pattern: {
+              value: /https:\/\/drive\.google\.com\/.+/,
+              message: "Enter a valid Google Drive link",
+            },
+          })}
           className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
         />
         {errors.resume && (
@@ -150,7 +173,12 @@ export default function JobApplicationForm({ id }) {
         </label>
         <input
           type="url"
-          {...register("github", { required: "GitHub profile is required" })}
+          {...register("github", {
+            required: "GitHub profile is required", pattern: {
+              value: /^(https?:\/\/)?(www\.)?github\.com\/[A-z0-9_-]+\/?$/,
+              message: "Enter a valid GitHub profile URL",
+            },
+          })}
           className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
         />
         {errors.github && (
@@ -167,7 +195,12 @@ export default function JobApplicationForm({ id }) {
         <input
           type="url"
           placeholder="LeetCode, Codeforces, HackerRank, etc."
-          {...register("others")}
+          {...register("others", {
+            pattern: {
+              value: /^(https?:\/\/)?[^\s]+$/,
+              message: "Enter a valid URL",
+            },
+          })}
           className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
         />
       </div>

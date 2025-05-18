@@ -1,5 +1,6 @@
 import Link from "next/link";
-import lara from "../assets/images/lara.png";
+// import lara from "../assets/images/lara.png";
+import lara from "@/assets/images/lara.png";
 import CountdownTimer from "./CountdownTimer";
 import Image from "next/image";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -13,9 +14,11 @@ export default function JobCard({ job }) {
       <div className="relative">
         {/* Job image */}
         <Image
+
           src={lara}
           alt="job image"
           className="object-contain w-full"
+          placeholder="blur"
           priority
         />
 
@@ -66,7 +69,7 @@ export default function JobCard({ job }) {
             href={`/job/${job?.slug}/apply/${job?.id}`}
             className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 flex gap-1.5 items-center">
             Apply Now
-            <FaArrowRightLong className="-rotate-45 text-sm"/>
+            <FaArrowRightLong className="-rotate-45 text-sm" />
           </Link>
         </div>
       </div>
