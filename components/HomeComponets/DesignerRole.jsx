@@ -65,7 +65,7 @@ export default function DesignerRole({ designerJobs, developer }) {
         className="lg:py-10">
 
         {
-          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('developer')).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
+          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('developer') || developerJob.category.name.toLowerCase().includes('development') || developerJob.category.name.toLowerCase().includes('dev')).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
             if (developer) {
               return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
                 <JobCard job={job} />
@@ -74,7 +74,7 @@ export default function DesignerRole({ designerJobs, developer }) {
           })
         }
         {
-          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('designer')).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
+          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('designer') || developerJob.category.name.toLowerCase().includes('design')).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).map((job) => {
             if (!developer) {
               return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
                 <JobCard job={job} />

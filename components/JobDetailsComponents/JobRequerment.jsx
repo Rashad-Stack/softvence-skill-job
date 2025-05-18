@@ -45,34 +45,13 @@ We are seeking a UI/UX Designer to join our team at Oilyo. In this role, you wil
 
 `;
 
+
 export default function JobRequerment({ slug, singleJob }) {
   // console.log(slug, singleJob.id)
   return (
     <section className="mt-5 container mx-auto lg:relative p-2 md:p-2 lg:p-2">
-      {/* apply part */}
-      <div className="bg-[#fafffb] p-8 max-w-[488px] mx-auto rounded-3xl lg:absolute right-0 -top-40 border border-[#E1F3E4]">
-        <p className="text-[#484848] text-base font-normal leading-[132%] tracking[-0.32px] mb-6">
-          Ready to apply? We can't wait to meet you!
-        </p>
-        
-        <Link
-          href={`/job/${slug}/apply/${singleJob?.id}`}
-          aria-label="Apply Job"
-          className="text-sm sm:text-base bg-[#038317] text-white px-4 py-2 rounded-lg hover:bg-[#40854a] transition font-pop font-semibold w-full text-center block"
-        >
-          Apply Now
-        </Link>
 
-        <p className="text-[#636363] text-center text-base font-normal leading-[132%] tracking[-0.32px] mt-8 mb-6">
-          Next, you'll face an assessment to proceed. Apply for one job at a
-          time and prepare well.
-        </p>
-        <p className="text-[#484848] text-center text-[12px] font-normal leading-[132%] tracking[-0.24px]">
-          * By applying for this job listing, you agree to our Data
-        </p>
-      </div>
-
-      <div className="lg:flex lg:justify-between lg:items-center ">
+      <div className={`lg:flex lg:justify-between`}>
         {/* left side  */}
         <div className="lg:max-w-1/2 mb-10 lg:mb-0">
           {/* markDown text */}
@@ -104,9 +83,31 @@ export default function JobRequerment({ slug, singleJob }) {
         </div>
 
         {/* right side  */}
-        <div className="lg:max-w-[1/2] lg:mt-15">
+        <div className={`lg:max-w-[1/2] relative`}>
           {/* first div */}
-          <div className="bg-[#fafffb] p-8 md:w-[488px] mx-auto lg:mx-0 rounded-3xl border border-[#E1F3E4]">
+          <div className="bg-[#fafffb] p-8 max-w-[488px] mx-auto rounded-3xl border border-[#E1F3E4] mb-8 lg:absolute -top-40">
+            <p className="text-[#484848] text-base font-normal leading-[132%] tracking[-0.32px] mb-6">
+              Ready to apply? We can't wait to meet you!
+            </p>
+
+            <Link
+              href={`/job/${slug}/apply/${singleJob?.id}`}
+              aria-label="Apply Job"
+              className="text-sm sm:text-base bg-[#038317] text-white px-4 py-2 rounded-lg hover:bg-[#40854a] transition font-pop font-semibold w-full text-center block"
+            >
+              Apply Now
+            </Link>
+
+            <p className="text-[#636363] text-center text-base font-normal leading-[132%] tracking[-0.32px] mt-5 mb-6">
+              Next, you'll face an assessment to proceed. Apply for one job at a
+              time and prepare well.
+            </p>
+            <p className="text-[#484848] text-center text-[12px] font-normal leading-[132%] tracking[-0.24px]">
+              * By applying for this job listing, you agree to our Data
+            </p>
+          </div>
+          {/* scond div */}
+          <div className="bg-[#fafffb] p-8 md:w-[488px] mx-auto lg:mx-0 rounded-3xl border border-[#E1F3E4] lg:mt-30">
             <h4 className="text-[#121212] text-[20px] font-medium leading-normal mb-7">
               Job Overview
             </h4>
@@ -177,10 +178,10 @@ export default function JobRequerment({ slug, singleJob }) {
             </div>
           </div>
 
-          {/* second div */}
+          {/* third div */}
           <div className="bg-[#fafffb] p-8 md:w-[488px] mx-auto rounded-3xl border border-[#E1F3E4] mt-8">
             <h4 className="text-[#121212] text-[20px] font-medium leading-normal mb-7">
-              Job Overview
+              Job Tags
             </h4>
             <div className="text-[#038317] text-[16px] font-medium leading-normal ">
               <div className="flex flex-wrap gap-2 items-center mb-3.5">

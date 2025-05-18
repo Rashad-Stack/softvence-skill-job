@@ -13,12 +13,13 @@ export default async function JobDetails({ params }) {
         <main className='mt-[77px] my-14'>
             {/* banner section */}
             <Banner singleJob={singleJob}></Banner>
-            
-            {/* Job requirment */} 
+
+            {/* Job requirment */}
             <JobRequerment slug={slug} singleJob={singleJob}></JobRequerment>
 
             {/* Location section */}
             <Location></Location>
+
         </main>
     )
 }
