@@ -61,7 +61,7 @@ export default function JobApplicationForm({ id }) {
                 message: "Name must be at least 3 characters",
               },
             })}
-            className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400"
           />
           {errors.name && (
             <span className="text-sm text-red-500 mt-1">
@@ -80,7 +80,7 @@ export default function JobApplicationForm({ id }) {
                 message: "Enter a valid email address",
               },
             })}
-            className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400"
           />
           {errors.email && (
             <span className="text-sm text-red-500 mt-1">
@@ -101,7 +101,7 @@ export default function JobApplicationForm({ id }) {
                 message: "Enter a valid phone number",
               },
             })}
-            className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400"
           />
           {errors.phone && (
             <span className="text-sm text-red-500 mt-1">
@@ -120,7 +120,7 @@ export default function JobApplicationForm({ id }) {
               required: "Salary is required", validate: (value) =>
                 !isNaN(value) && parseInt(value) > 0 || "Enter a valid number",
             })}
-            className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400"
           />
           {errors.salary && (
             <span className="text-sm text-red-500 mt-1">
@@ -148,7 +148,7 @@ export default function JobApplicationForm({ id }) {
               message: "Enter a valid Google Drive link",
             },
           })}
-          className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400"
         />
         {errors.resume && (
           <span className="text-sm text-red-500 mt-1">
@@ -158,7 +158,7 @@ export default function JobApplicationForm({ id }) {
         <small className="text-gray-500 mt-2">
           See how to upload your CV to Google Drive and make it publicly accessible.
           <a
-            className='text-[#038317] text-[16px] font-medium leading-normal underline'
+            className='text-[#038317] text-sm font-medium leading-normal underline ml-1'
             href="https://www.youtube.com/watch?v=l8lr-QJ7mdA"
             target="_blank"
             rel="noopener noreferrer">
@@ -179,7 +179,7 @@ export default function JobApplicationForm({ id }) {
               message: "Enter a valid GitHub profile URL",
             },
           })}
-          className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400"
         />
         {errors.github && (
           <span className="text-sm text-red-500 mt-1">
@@ -201,7 +201,7 @@ export default function JobApplicationForm({ id }) {
               message: "Enter a valid URL",
             },
           })}
-          className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400"
         />
       </div>
 

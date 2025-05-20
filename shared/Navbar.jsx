@@ -21,9 +21,9 @@ export default function Navbar() {
         </Link>
 
         {/* Button */}
-        <Link className="text-sm sm:text-base bg-[#038317] text-white px-4 py-2 rounded-lg hover:bg-[#40854a] transition font-pop font-semibold" href="/careers" aria-label="View all job roles">
+        {/* <Link className="text-sm sm:text-base bg-[#038317] text-white px-4 py-2 rounded-lg hover:bg-[#40854a] transition font-pop font-semibold" href="/careers" aria-label="View all job roles">
             View all roles
-        </Link>
+        </Link> */}
 
       </div>
     </nav>

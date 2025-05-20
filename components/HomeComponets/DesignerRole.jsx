@@ -12,7 +12,6 @@ import JobCard from "../JobCard";
 export default function DesignerRole({ designerJobs, developer }) {
 
   const swiperRef = useRef(null);
-
   if (designerJobs.length === 0) {
     return (
       <div className="text-center py-10">
@@ -35,12 +34,12 @@ export default function DesignerRole({ designerJobs, developer }) {
           designerJobs.length >= 4 && <div className="flex items-center gap-4">
             <button
               onClick={() => swiperRef.current?.slidePrev()}
-              className="lg:w-12 lg:h-12 w-9 h-9 flex items-center justify-center rounded-full border border-[#3C8303] text-[#3C8303] hover:bg-[#3C8303] hover:text-white transition">
+              className="lg:w-12 lg:h-12 w-9 h-9 flex items-center justify-center rounded-full border border-[#3C8303] text-[#3C8303] hover:bg-[#3C8303] hover:text-white transition duration-500 cursor-pointer ease-in-out">
               <FiArrowLeft size={24} />
             </button>
             <button
               onClick={() => swiperRef.current?.slideNext()}
-              className="lg:w-12 lg:h-12 w-9 h-9 flex items-center justify-center rounded-full border border-[#3C8303] text-[#3C8303] hover:bg-[#3C8303] hover:text-white transition">
+              className="lg:w-12 lg:h-12 w-9 h-9 flex items-center justify-center rounded-full border border-[#3C8303] text-[#3C8303] hover:bg-[#3C8303] hover:text-white transition cursor-pointer duration-500 ease-in-out">
               <FiArrowRight size={24} />
             </button>
           </div>
@@ -74,7 +73,7 @@ export default function DesignerRole({ designerJobs, developer }) {
           })
         }
         {
-          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('designer') || developerJob.category.name.toLowerCase().includes('design')).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).map((job) => {
+          designerJobs.filter((developerJob) => developerJob.category.name.toLowerCase().includes('designer') || developerJob.category.name.toLowerCase().includes('design')).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((job) => {
             if (!developer) {
               return <SwiperSlide key={job.id} className="lg:py-4 pt-5 lg:pb-5 pb-5">
                 <JobCard job={job} />
@@ -82,6 +81,7 @@ export default function DesignerRole({ designerJobs, developer }) {
             }
           })
         }
+        
 
       </Swiper>
     </div>
