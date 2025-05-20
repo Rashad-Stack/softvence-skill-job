@@ -1,29 +1,43 @@
 "use client";
 
-export default function GlobalError({ reset }) {
+import { useEffect } from "react";
+import Head from "next/head";
+import Link from "next/link";
+
+export default function Error({ error, reset }) {
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
+
+
   return (
-    <html lang="en">
-      <body className="bg-white transition-colors duration-200 dark:bg-black">
-        <div className="flex min-h-screen flex-col items-center justify-center gap-8 px-4 py-12 md:flex-row md:gap-12 lg:gap-16">
-          <div className="w-full max-w-md space-y-6 md:w-1/2">
-            <div className="relative">
-              <div className="space-y-4 text-center">
-                <h1 className="mb-4 text-2xl font-bold sm:text-3xl">
-                  Looks like you&apos;ve found the doorway to the great nothing
-                </h1>
-                <p className="dark:text-medium-bg mb-6 text-base text-gray-600 sm:text-lg">
-                  Sorry about that! Please try again or visit our homepage.
-                </p>
-                <button
-                  onClick={reset}
-                  className="bg-main hover:bg-dark-main cursor-pointer rounded-md px-6 py-2 text-white transition-colors duration-200">
-                  Try Again
-                </button>
-              </div>
-            </div>
-          </div>
+    <>
+      <Head>
+        <title>Something Went Wrong | Softvence</title>
+        <meta name="description" content="Oops! Something went wrong on Softvence. Please try again or return to the homepage." />
+        <meta name="robots" content="noindex, nofollow" /> {/* Prevent indexing error pages */}
+      </Head>
+
+      <main className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
+        <h1 className="text-5xl font-bold text-red-600 mb-4">Something went wrong</h1>
+        <p className="text-gray-600 mb-6 text-center max-w-md">
+          We're sorry for the inconvenience. Please try again or go back home.
+        </p>
+        <div className="flex gap-4">
+          <button
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+             Go Back
+          </button>
+          <Link
+            href="/"
+            className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+          >
+            Take me home
+          </Link>
         </div>
-      </body>
-    </html>
+      </main>
+    </>
   );
 }
+

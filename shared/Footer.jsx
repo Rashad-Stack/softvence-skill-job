@@ -5,43 +5,39 @@ import Link from 'next/link';
 import bg from '@/assets/images/BG.png';
 
 export default function Footer() {
-
   const currentYear = new Date().getFullYear();
 
-  return <footer
+  return (
+    <footer
       className="w-full py-14 h-[260px] bg-center bg-cover bg-no-repeat text-white bg-[#f3f4f6]"
-      style={{ backgroundImage: `url(${bg.src})`}}
+      style={{ backgroundImage: `url(${bg.src})` }}
+      aria-label="Website Footer"
     >
       <div className="max-w-7xl mx-auto text-center px-4">
+        
         {/* Navigation Links */}
-        <nav className="mb-6">
-          <ul className="flex justify-center space-x-8 font-semibold text-black ">
+        <nav className="mb-6" aria-label="Footer navigation">
+          <ul className="flex justify-center space-x-8 font-semibold text-black">
             <li>
-              <Link href="/" className="" aria-label="Go to homepage">
-                Home
-              </Link>
+              <Link href="/" aria-label="Go to homepage">Home</Link>
             </li>
             <li>
-              <Link href="/career" className="" aria-label="Career opportunities">
-                Careers
-              </Link>
+              <Link href="/career" aria-label="View career opportunities">Careers</Link>
             </li>
             <li>
-              <Link href="/privacy" className="" aria-label="Privacy policy">
-                Privacy
-              </Link>
+              <Link href="/privacy" aria-label="Read our privacy policy">Privacy</Link>
             </li>
           </ul>
         </nav>
 
         {/* Social Media Icons */}
-        <div className="flex justify-center space-x-6 mt-4 text-[#22c55e]">
+        <div className="flex justify-center space-x-6 mt-4 text-[#22c55e]" aria-label="Social media links">
           <a
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
-            className=" rounded-full p-2.5 hover:bg-[#22c55e] hover:text-white transition duration-300"
-            aria-label="Facebook"
+            aria-label="Softvence on Facebook"
+            className="rounded-full p-2.5 hover:bg-[#22c55e] hover:text-white transition duration-300"
           >
             <FaFacebook size={24} />
           </a>
@@ -49,8 +45,8 @@ export default function Footer() {
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
-            className=" rounded-full p-2.5 hover:bg-[#22c55e] hover:text-white transition duration-300"
-            aria-label="Twitter"
+            aria-label="Softvence on Twitter"
+            className="rounded-full p-2.5 hover:bg-[#22c55e] hover:text-white transition duration-300"
           >
             <FaTwitter size={24} />
           </a>
@@ -58,8 +54,8 @@ export default function Footer() {
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className=" rounded-full p-2.5 hover:bg-[#22c55e] hover:text-white transition duration-300"
-            aria-label="Instagram"
+            aria-label="Softvence on Instagram"
+            className="rounded-full p-2.5 hover:bg-[#22c55e] hover:text-white transition duration-300"
           >
             <FaInstagram size={24} />
           </a>
@@ -67,17 +63,18 @@ export default function Footer() {
             href="https://youtube.com"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Softvence on YouTube"
             className="rounded-full p-2.5 hover:bg-[#22c55e] hover:text-white transition duration-300"
-            aria-label="YouTube"
           >
             <FaYoutube size={24} />
           </a>
         </div>
 
-        {/* Footer Bottom Text */}
+        {/* Footer Text */}
         <div className="mt-6 text-sm text-black">
-          <p>© {currentYear} Softvence. All rights reserved.</p>
+          <p>© {currentYear} <strong>Softvence</strong>. All rights reserved.</p>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 }
