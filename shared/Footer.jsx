@@ -22,10 +22,10 @@ export default function Footer() {
               <Link href="/" aria-label="Go to homepage">Home</Link>
             </li>
             <li>
-              <Link href="/career" aria-label="View career opportunities">Careers</Link>
+              <Link href="/" aria-label="View career opportunities">Careers</Link>
             </li>
             <li>
-              <Link href="/privacy" aria-label="Read our privacy policy">Privacy</Link>
+              <Link href="/" aria-label="Read our privacy policy">Privacy</Link>
             </li>
           </ul>
         </nav>

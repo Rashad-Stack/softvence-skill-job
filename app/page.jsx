@@ -30,6 +30,10 @@ export const metadata = {
 
 export default async function Home() {
   const { data } = await axiosInstance.get("/job/all");
+  const allJobs = data.data;
+  if(!allJobs){
+    return <h1>No job available right now</h1>
+  }
 
   return (
     <main>
