@@ -19,7 +19,7 @@ export default function JobApplicationForm({ id }) {
       formData.append("fullName", data.name);
       formData.append("email", data.email);
       formData.append("phoneNumber", data.phone);
-      formData.append("ExpectSalary", parseInt(data.salary));
+      formData.append("expectSalary", parseInt(data.salary));
       formData.append("githubUrl", data.github);
       formData.append("cpProfile", data.others || "");
       formData.append("cv", data.resume);
@@ -177,7 +177,7 @@ export default function JobApplicationForm({ id }) {
               className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${
                 errors.salary ? "border-red-500" : ""
               }`}
-              placeholder="Expected salary in USD"
+              placeholder="Expected salary in TK"
             />
             {errors.salary && (
               <span role="alert" className="text-sm text-red-500 mt-1">
