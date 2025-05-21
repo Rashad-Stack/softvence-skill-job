@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
-import { allJobs } from "@/service/api"; // আপনি যে ফাংশন দিয়ে সব জব লোড করেন
 import axiosInstance from "@/lib/axios";
 
 export async function GET() {
   const baseUrl = "https://softvence-skill-job.vercel.app";
 
-//   const jobs = await allJobs(); // সব জব লিস্ট আনুন
   const { data } = await axiosInstance.get("/job/all");
   const jobs = data.data;
 
