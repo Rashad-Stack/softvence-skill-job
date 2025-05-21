@@ -17,11 +17,11 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: `Apply for ${job.title} Job | Softvence`,
       description: `Submit your application for the ${job.title} position at Softvence.`,
-      url: `https://yourdomain.com/jobs/apply/${job.title}`,  // Replace with your real URL structure
+      url: `${process.env.NEXT_PUBLIC_DOMAIN}/job/${slug}/apply/${job.id}`,
       siteName: 'Softvence',
       images: [
         {
-          url: 'https://yourdomain.com/og-image-job-apply.png', // Replace with your actual image URL
+          url: '/lara.png',
           width: 1200,
           height: 630,
           alt: `Apply for ${job.title} job`,
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       title: `Apply for ${job.title} Job | Softvence`,
       description: `Apply now for the ${job.title} job at Softvence.`,
-      images: ['https://yourdomain.com/og-image-job-apply.png'], // Replace this
+      images: [`${process.env.NEXT_PUBLIC_DOMAIN}/lara.png`],
     },
   };
 }

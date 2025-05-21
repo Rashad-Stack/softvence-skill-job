@@ -25,10 +25,10 @@ export async function generateMetadata({ params }) {
       title: `${job.title} - ${job.location}`,
       description: `Exciting opportunity for a ${job.title}. Salary: ${job.minSalary} - ${job.maxSalary} BDT/month.`,
       type: 'article',
-      url: `https://yourdomain.com/job/${slug}`, // Replace with your domain
+      url: `${process.env.NEXT_PUBLIC_DOMAIN}/job/${slug}`,
       images: [
         {
-          url: 'https://yourdomain.com/og-job.png', // Replace with a real image URL
+          url: '/lara.png',
           width: 1200,
           height: 630,
           alt: `${job.title} cover image`,
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       title: `${job.title} | ${job.location}`,
       description: `Apply now for ${job.title} in ${job.location}.`,
-      images: ['https://yourdomain.com/og-job.png'], // Replace with a real image
+      images: [`${process.env.NEXT_PUBLIC_DOMAIN}/lara.png`],
     },
   };
 }

@@ -13,7 +13,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_DOMAIN}/logo.png`, // Replace with actual OG image
+        url: `lara.png`,
         width: 1200,
         height: 630,
         alt: "Job roles open - Choose your position",
@@ -24,7 +24,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Explore Open Job Positions | Softvence",
     description: "Choose your next role as a developer or designer today.",
-    images: [`${process.env.NEXT_PUBLIC_DOMAIN}/logo.png`], // Replace with actual image
+    images: [`${process.env.NEXT_PUBLIC_DOMAIN}/lara.png`],
   },
 };
 
