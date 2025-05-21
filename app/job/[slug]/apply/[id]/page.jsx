@@ -3,7 +3,8 @@ import JobApplicationForm from "../_components/JobApplicationForm";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-   const job = await singleJobData({ slug });
+  const job = await singleJobData({ slug });
+
   return {
     title: `Apply for ${job.title} Job | Softvence`,
     description: `Submit your application for the ${job.title} position. Join our team and explore career opportunities at Softvence.`,
@@ -36,12 +37,16 @@ export async function generateMetadata({ params }) {
       description: `Apply now for the ${job.title} job at Softvence.`,
       images: [`${process.env.NEXT_PUBLIC_DOMAIN}/lara.png`],
     },
+    
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_DOMAIN}/job/${slug}/apply/${job.id}`,
+    },
   };
 }
 
 export default async function JobFormPage({ params }) {
-  const { slug, id } = await params;
-   const job = await singleJobData({ slug });
+  const { slug, id } = await params; 
+  const job = await singleJobData({ slug });
 
   return (
     <main className="container mx-auto max-w-4xl py-10 mt-20 px-4 text-gray-800">

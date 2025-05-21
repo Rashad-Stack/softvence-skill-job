@@ -19,11 +19,21 @@ export const metadata = {
   title: "SoftVence",
   description:
     "Currently following positions are open, feel free to apply any one where you are skilled and prefer to join.",
+  alternates: {
+    canonical: "https://softvence-skill-job.vercel.app/",
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* ✅ Canonical Tag here */}
+        <link
+          rel="canonical"
+          href="https://softvence-skill-job.vercel.app/"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Navbar />
@@ -34,3 +44,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
