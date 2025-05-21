@@ -6,8 +6,8 @@ import CountdownTimer from "./CountdownTimer";
 import lara from "@/assets/images/lara.png";
 
 export default function JobCard({ job }) {
-  const jobTitle = job.title || "Job Opportunity";
-  const deadlineDate = new Date(job.deadline).toLocaleDateString();
+  const jobTitle = job?.title || "Job Opportunity";
+  const deadlineDate = new Date(job?.deadline).toLocaleDateString();
 
   return (
     <article
@@ -37,7 +37,7 @@ export default function JobCard({ job }) {
       {/* Job details */}
       <div className="p-4 sm:p-5 relative bg-[#F6FFF8]">
         {/* Countdown */}
-        {job.deadline && (
+        {job?.deadline && (
           <div className="absolute -top-10 right-2 bg-[#F6FFF8] px-2 py-1 rounded-t-lg text-xs sm:text-sm text-green-600 font-semibold">
             <CountdownTimer deadline={job?.deadline} />
           </div>
@@ -50,7 +50,7 @@ export default function JobCard({ job }) {
         <p className="text-sm text-[#837E7E] font-normal font-pop mb-2">
           {job?.jobNature?.replace("_", " ")} | {job?.jobType?.replace("_", " ")} | {job?.jobLevel?.replace("_", " ")} |
           <span className="text-[#151515] font-medium ml-1 capitalize">
-            {job.shift?.toLowerCase()} Shift
+            {job?.shift?.toLowerCase()} Shift
           </span>
         </p>
 

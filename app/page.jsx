@@ -31,6 +31,7 @@ export const metadata = {
 export default async function Home() {
   const { data } = await axiosInstance.get("/job/all");
   const allJobs = data.data;
+
   if(!allJobs){
     return <h1>No job available right now</h1>
   }
@@ -49,10 +50,10 @@ export default async function Home() {
         </header>
 
         {/* Developer Roles */}
-        <DesignerRole designerJobs={data.data} developer={true} />
+        <DesignerRole designerJobs={allJobs} developer={true} />
 
         {/* Designer Roles */}
-        <DesignerRole designerJobs={data.data} developer={false} />
+        <DesignerRole designerJobs={allJobs} developer={false} />
       </section>
     </main>
   );

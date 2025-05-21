@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
-
 import { TbCalendarMonthFilled, TbUsersGroup } from "react-icons/tb";
 import { TfiAlarmClock } from "react-icons/tfi";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
@@ -127,10 +126,10 @@ export default function JobRequerment({ slug, singleJob }) {
               ].map((item, index) => (
                 <li key={index} className="flex flex-col items-center text-center">
                   <span className="text-[#038317] text-2xl p-2 mb-2 rounded-full bg-gradient-to-r from-[#EFFFF2] to-[#A4E8AE]">
-                    {item.icon}
+                    {item?.icon}
                   </span>
-                  <p className="text-[#636363] text-[12px] font-medium mb-0.5">{item.label}</p>
-                  <p className="text-[#121212] text-[12px] font-medium">{item.value}</p>
+                  <p className="text-[#636363] text-[12px] font-medium mb-0.5">{item?.label}</p>
+                  <p className="text-[#121212] text-[12px] font-medium">{item?.value}</p>
                 </li>
               ))}
             </ul>

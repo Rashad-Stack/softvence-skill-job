@@ -4,7 +4,14 @@ import axiosInstance from "@/lib/axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-export default function JobApplicationForm({ id }) {
+export default function JobApplicationForm({ id, job }) {
+  // console.log("job", job)
+
+  const fieldsArray = Object.entries(job?.fields);
+  // console.log("fields array", fieldsArray)
+
+
+
   const {
     register,
     handleSubmit,
@@ -13,6 +20,7 @@ export default function JobApplicationForm({ id }) {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log("data -->", data)
     try {
       const formData = new FormData();
       formData.append("jobId", id);
@@ -21,8 +29,22 @@ export default function JobApplicationForm({ id }) {
       formData.append("phoneNumber", data.phone);
       formData.append("expectSalary", parseInt(data.salary));
       formData.append("githubUrl", data.github);
-      formData.append("cpProfile", data.others || "");
+      // formData.append("cpProfile", data.others || "");
       formData.append("cv", data.resume);
+
+      // Dynamically add other fields except fixed ones
+      const fixedKeys = ["name", "email", "phone", "salary", "github", "resume"];
+      const othersFields = {};
+
+      Object.entries(data).forEach(([key, value]) => {
+        if (!fixedKeys.includes(key)) {
+          othersFields[key] = value;
+        }
+      });
+      formData.append("othersFields", JSON.stringify(othersFields));
+
+
+      console.log(formData);
 
       const response = await axiosInstance.post("/job/application/create", formData);
 
@@ -80,9 +102,8 @@ export default function JobApplicationForm({ id }) {
                   message: "Name must be at least 3 characters",
                 },
               })}
-              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${
-                errors.name ? "border-red-500" : ""
-              }`}
+              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.name ? "border-red-500" : ""
+                }`}
               placeholder="Your full name"
             />
             {errors.name && (
@@ -112,9 +133,8 @@ export default function JobApplicationForm({ id }) {
                   message: "Enter a valid email address",
                 },
               })}
-              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${
-                errors.email ? "border-red-500" : ""
-              }`}
+              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.email ? "border-red-500" : ""
+                }`}
               placeholder="you@example.com"
             />
             {errors.email && (
@@ -144,9 +164,8 @@ export default function JobApplicationForm({ id }) {
                   message: "Enter a valid phone number",
                 },
               })}
-              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${
-                errors.phone ? "border-red-500" : ""
-              }`}
+              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.phone ? "border-red-500" : ""
+                }`}
               placeholder="e.g. 01234567890"
             />
             {errors.phone && (
@@ -174,9 +193,8 @@ export default function JobApplicationForm({ id }) {
                 validate: (value) =>
                   !isNaN(value) && parseInt(value) > 0 || "Enter a valid number",
               })}
-              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${
-                errors.salary ? "border-red-500" : ""
-              }`}
+              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.salary ? "border-red-500" : ""
+                }`}
               placeholder="Expected salary in TK"
             />
             {errors.salary && (
@@ -209,9 +227,8 @@ export default function JobApplicationForm({ id }) {
                 message: "Enter a valid Google Drive link",
               },
             })}
-            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${
-              errors.resume ? "border-red-500" : ""
-            }`}
+            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.resume ? "border-red-500" : ""
+              }`}
             placeholder="https://drive.google.com/your-cv-link"
           />
           {errors.resume && (
@@ -250,9 +267,8 @@ export default function JobApplicationForm({ id }) {
                 message: "Enter a valid GitHub profile URL",
               },
             })}
-            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${
-              errors.github ? "border-red-500" : ""
-            }`}
+            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.github ? "border-red-500" : ""
+              }`}
             placeholder="https://github.com/yourusername"
           />
           {errors.github && (
@@ -262,33 +278,37 @@ export default function JobApplicationForm({ id }) {
           )}
         </div>
 
-        <div className="flex flex-col">
-          <label
-            htmlFor="others"
-            className="mb-1 font-medium text-gray-700"
-          >
-            Competitive Programming Profiles
-          </label>
-          <input
-            id="others"
-            type="url"
-            placeholder="LeetCode, Codeforces, HackerRank, etc."
-            {...register("others", {
-              pattern: {
-                value: /^(https?:\/\/)?[^\s]+$/,
-                message: "Enter a valid URL",
-              },
-            })}
-            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${
-              errors.others ? "border-red-500" : ""
-            }`}
-          />
-          {errors.others && (
-            <span role="alert" className="text-sm text-red-500 mt-1">
-              {errors.others.message}
-            </span>
-          )}
-        </div>
+        {fieldsArray &&
+          fieldsArray.map(([key, value]) => (
+            <div key={key} className="flex flex-col mb-4">
+              <label
+                htmlFor={key}
+                className="mb-1 font-medium text-gray-700 capitalize"
+              >
+                {key}
+              </label>
+
+              <input
+                id={key}
+                type="url"
+                placeholder={value}
+                {...register(key, {
+                  pattern: {
+                    value: /^(https?:\/\/)?[^\s]+$/,
+                    message: "Enter a valid URL",
+                  },
+                })}
+                className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""}`}
+              />
+
+              {errors?.[key] && (
+                <span role="alert" className="text-sm text-red-500 mt-1">
+                  {errors[key].message}
+                </span>
+              )}
+            </div>
+          ))
+        }
 
         <button
           type="submit"

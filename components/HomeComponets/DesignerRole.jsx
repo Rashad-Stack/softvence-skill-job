@@ -12,7 +12,6 @@ import { useDeviceType } from "@/hooks/useDeviceType";
 export default function DesignerRole({ designerJobs, developer }) {
   const swiperRef = useRef(null);
   const { isMobile, isTablet, isDesktop } = useDeviceType(); 
-  console.log(isMobile)
 
   const roleType = developer ? "Developer" : "Designer";
 
@@ -25,7 +24,7 @@ export default function DesignerRole({ designerJobs, developer }) {
         return name.includes("designer") || name.includes("design");
       }
     })
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    .sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
 
   if (filteredJobs.length === 0) {
     return (
