@@ -24,7 +24,6 @@ const formatLabel = (str) => str?.replace(/_/g, " ");
 export default function JobRequerment({ slug, singleJob }) {
 
   const jobTags = [...new Set(["UI", "laravel", "UX", "Developer", "Frontend"])];
-  // console.log(slug, singleJob.id)
   return (
     <section className="mt-5 container mx-auto lg:relative p-2">
 

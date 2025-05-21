@@ -6,7 +6,7 @@ import { singleJobData } from '@/service/api';
 
 // 🔹 Metadata with Canonical Tag
 export async function generateMetadata({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
   const job = await singleJobData({ slug });
 
   return {
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }) {
 
 // 🔹 Main Job Details Component
 export default async function JobDetails({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
   const job = await singleJobData({ slug });
 
   // 🔸 Structured Data (JSON-LD Schema.org)

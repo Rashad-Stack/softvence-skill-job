@@ -26,7 +26,6 @@ export default function JobApplicationForm({ id }) {
 
       const response = await axiosInstance.post("/job/application/create", formData);
 
-      console.log("Upload Success:", response.data);
       toast.success("Application submitted successfully!");
       reset();
     } catch (error) {
