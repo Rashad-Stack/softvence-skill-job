@@ -5,10 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function JobApplicationForm({ id, job }) {
-  console.log("job", job)
-
   const fieldsArray = Object.entries(job?.fields);
-  // console.log("fields array", fieldsArray)
 
   const {
     register,
@@ -18,7 +15,6 @@ export default function JobApplicationForm({ id, job }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log("data -->", data)
     try {
       const formData = new FormData();
       formData.append("jobId", id);
@@ -29,45 +25,30 @@ export default function JobApplicationForm({ id, job }) {
       formData.append("githubUrl", data.github);
       formData.append("cv", data.resume);
 
-      // Dynamically add other fields except fixed ones
       const fixedKeys = ["name", "email", "phone", "salary", "github", "resume"];
       const othersFields = {};
-
       Object.entries(data).forEach(([key, value]) => {
-        if (!fixedKeys.includes(key)) {
-          othersFields[key] = value;
-        }
+        if (!fixedKeys.includes(key)) othersFields[key] = value;
       });
       formData.append("othersFields", JSON.stringify(othersFields));
 
-      const response = await axiosInstance.post("/job/application/create", formData);
-
+      await axiosInstance.post("/job/application/create", formData);
       toast.success("Application submitted successfully!");
       reset();
     } catch (error) {
-      console.error("Upload Error:", error);
-      toast.error(
-        error?.response?.data?.message || "Failed to submit application."
-      );
+      toast.error(error?.response?.data?.message || "Failed to submit application.");
     }
   };
 
   return (
-    <section
-      aria-labelledby="job-application-form-title"
-      className="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto space-y-6 border border-gray-200"
-    >
-      <h2
-        id="job-application-form-title"
-        className="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center"
-      >
+    <section className="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto space-y-6 border border-gray-200" aria-labelledby="job-application-form-title">
+      <h2 id="job-application-form-title" className="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">
         Apply for This Job - Job Application Form
       </h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        role="form"
         aria-describedby="job-application-description"
         className="space-y-6"
       >
@@ -76,302 +57,148 @@ export default function JobApplicationForm({ id, job }) {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex flex-col">
-            <label
-              htmlFor="fullName"
-              className="mb-1 font-medium text-gray-700"
-            >
-              Full Name <span aria-hidden="true" className="text-red-500">*</span>
-            </label>
-            <input
-              id="fullName"
-              type="text"
-              autoComplete="name"
-              aria-required="true"
-              aria-invalid={errors.name ? "true" : "false"}
-              {...register("name", {
-                required: "Name is required",
-                minLength: {
-                  value: 3,
-                  message: "Name must be at least 3 characters",
-                },
-              })}
-              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.name ? "border-red-500" : ""
-                }`}
-              placeholder="Your full name"
-            />
-            {errors.name && (
-              <span role="alert" className="text-sm text-red-500 mt-1">
-                {errors.name.message}
-              </span>
-            )}
-          </div>
-
-          <div className="flex flex-col">
-            <label
-              htmlFor="email"
-              className="mb-1 font-medium text-gray-700"
-            >
-              Email <span aria-hidden="true" className="text-red-500">*</span>
-            </label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              aria-required="true"
-              aria-invalid={errors.email ? "true" : "false"}
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Enter a valid email address",
-                },
-              })}
-              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.email ? "border-red-500" : ""
-                }`}
-              placeholder="you@example.com"
-            />
-            {errors.email && (
-              <span role="alert" className="text-sm text-red-500 mt-1">
-                {errors.email.message}
-              </span>
-            )}
-          </div>
-
-          <div className="flex flex-col">
-            <label
-              htmlFor="phone"
-              className="mb-1 font-medium text-gray-700"
-            >
-              Phone Number <span aria-hidden="true" className="text-red-500">*</span>
-            </label>
-            <input
-              id="phone"
-              type="tel"
-              autoComplete="tel"
-              aria-required="true"
-              aria-invalid={errors.phone ? "true" : "false"}
-              {...register("phone", {
-                required: "Phone number is required",
-                pattern: {
-                  value: /^[0-9]{11,15}$/,
-                  message: "Enter a valid phone number",
-                },
-              })}
-              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.phone ? "border-red-500" : ""
-                }`}
-              placeholder="e.g. 01234567890"
-            />
-            {errors.phone && (
-              <span role="alert" className="text-sm text-red-500 mt-1">
-                {errors.phone.message}
-              </span>
-            )}
-          </div>
-
-          <div className="flex flex-col">
-            <label
-              htmlFor="salary"
-              className="mb-1 font-medium text-gray-700"
-            >
-              Salary Expectation <span aria-hidden="true" className="text-red-500">*</span>
-            </label>
-            <input
-              id="salary"
-              type="number"
-              min="1"
-              aria-required="true"
-              aria-invalid={errors.salary ? "true" : "false"}
-              {...register("salary", {
-                required: "Salary is required",
-                validate: (value) =>
-                  !isNaN(value) && parseInt(value) > 0 || "Enter a valid number",
-              })}
-              className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.salary ? "border-red-500" : ""
-                }`}
-              placeholder="Expected salary in TK"
-            />
-            {errors.salary && (
-              <span role="alert" className="text-sm text-red-500 mt-1">
-                {errors.salary.message}
-              </span>
-            )}
-          </div>
+          {[{
+            id: "name",
+            label: "Full Name",
+            type: "text",
+            placeholder: "Your full name",
+            validation: {
+              required: "Name is required",
+              minLength: { value: 3, message: "Name must be at least 3 characters" },
+            }
+          }, {
+            id: "email",
+            label: "Email",
+            type: "email",
+            placeholder: "you@example.com",
+            validation: {
+              required: "Email is required",
+              pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email" },
+            }
+          }, {
+            id: "phone",
+            label: "Phone Number",
+            type: "tel",
+            placeholder: "e.g. 01234567890",
+            validation: {
+              required: "Phone number is required",
+              pattern: { value: /^[0-9]{11,15}$/, message: "Enter a valid phone number" },
+            }
+          }, {
+            id: "salary",
+            label: "Salary Expectation",
+            type: "number",
+            placeholder: "Expected salary in TK",
+            validation: {
+              required: "Salary is required",
+              validate: v => parseInt(v) > 0 || "Enter a valid number"
+            }
+          }].map(({ id, label, type, placeholder, validation }) => (
+            <div key={id} className="flex flex-col">
+              <label htmlFor={id} className="mb-1 font-medium text-gray-700">
+                {label} <span aria-hidden="true" className="text-red-500">*</span>
+              </label>
+              <input
+                id={id}
+                type={type}
+                placeholder={placeholder}
+                aria-invalid={errors[id] ? "true" : "false"}
+                aria-required="true"
+                {...register(id, validation)}
+                className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors[id] ? "border-red-500" : ""}`}
+              />
+              {errors[id] && <span role="alert" className="text-sm text-red-500 mt-1">{errors[id].message}</span>}
+            </div>
+          ))}
         </div>
 
         <div className="flex flex-col">
-          <label
-            htmlFor="resume"
-            className="mb-1 font-medium text-gray-700"
-          >
-            Upload your CV <span aria-hidden="true" className="text-red-500">*</span>
-          </label>
+          <label htmlFor="resume" className="mb-1 font-medium text-gray-700">Upload your CV <span className="text-red-500">*</span></label>
           <small className="mt-2 mb-1 text-yellow-500">
-            Due to security reasons, please upload your CV to Google Drive, make it publicly accessible, and share the public link here. Inaccessible CV links will disqualify your application.
+            Upload your CV to Google Drive, make it public, and paste the link here. Private links will disqualify your application.
           </small>
           <input
             id="resume"
             type="url"
-            aria-required="true"
-            aria-invalid={errors.resume ? "true" : "false"}
+            placeholder="https://drive.google.com/your-cv-link"
             {...register("resume", {
               required: "Resume is required",
-              pattern: {
-                value: /https:\/\/drive\.google\.com\/.+/,
-                message: "Enter a valid Google Drive link",
-              },
+              pattern: { value: /https:\/\/drive\.google\.com\/.+/, message: "Enter a valid Google Drive link" },
             })}
-            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.resume ? "border-red-500" : ""
-              }`}
-            placeholder="https://drive.google.com/your-cv-link"
+            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.resume ? "border-red-500" : ""}`}
           />
-          {errors.resume && (
-            <span role="alert" className="text-sm text-red-500 mt-1">
-              {errors.resume.message}
-            </span>
-          )}
+          {errors.resume && <span role="alert" className="text-sm text-red-500 mt-1">{errors.resume.message}</span>}
           <small className="text-gray-500 mt-2">
-            <a
-              className="text-[#038317] text-sm font-medium leading-normal underline ml-1"
-              href="https://www.youtube.com/watch?v=l8lr-QJ7mdA"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a className="text-[#038317] text-sm font-medium underline" href="https://www.youtube.com/watch?v=l8lr-QJ7mdA" target="_blank" rel="noopener noreferrer">
               How to upload your CV on Google Drive
             </a>
           </small>
         </div>
 
         <div className="flex flex-col">
-          <label
-            htmlFor="github"
-            className="mb-1 font-medium text-gray-700"
-          >
-            GitHub Profile Link <span aria-hidden="true" className="text-red-500">*</span>
-          </label>
+          <label htmlFor="github" className="mb-1 font-medium text-gray-700">GitHub Profile Link <span className="text-red-500">*</span></label>
           <input
             id="github"
             type="url"
-            aria-required="true"
-            aria-invalid={errors.github ? "true" : "false"}
+            placeholder="https://github.com/yourusername"
             {...register("github", {
               required: "GitHub profile is required",
-              pattern: {
-                value: /^(https?:\/\/)?(www\.)?github\.com\/[A-z0-9_-]+\/?$/,
-                message: "Enter a valid GitHub profile URL",
-              },
+              pattern: { value: /^(https?:\/\/)?(www\.)?github\.com\/[A-z0-9_-]+\/?$/, message: "Enter a valid GitHub URL" },
             })}
-            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.github ? "border-red-500" : ""
-              }`}
-            placeholder="https://github.com/yourusername"
+            className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors.github ? "border-red-500" : ""}`}
           />
-          {errors.github && (
-            <span role="alert" className="text-sm text-red-500 mt-1">
-              {errors.github.message}
-            </span>
-          )}
+          {errors.github && <span role="alert" className="text-sm text-red-500 mt-1">{errors.github.message}</span>}
         </div>
 
         <div className="grid grid-cols-12 gap-4">
-          {fieldsArray &&
-            fieldsArray.map(([key, field]) => {
-              const allowedInputTypes = ["text", "url", "number", "email", "password", "tel", "date"];
-              const safeType = allowedInputTypes.includes(field.type) ? field.type : "text";
+          {fieldsArray.map(([key, field]) => {
+            const inputType = ["text", "url", "number", "email", "password", "tel", "date"].includes(field.type) ? field.type : "text";
+            const validation = field.required ? { required: `${field.title} is required` } : {};
 
-              const validationRules = {
-                required: field.required ? `${field.title} is required` : false,
-              };
-
-              if (safeType === "url") {
-                validationRules.pattern = {
-                  value: /^(https?:\/\/)?[^\s]+$/i,
-                  message: "Enter a valid URL",
-                };
-              }
-
-              if (safeType === "number") {
-                if (field.min !== undefined)
-                  validationRules.min = {
-                    value: field.min,
-                    message: `Minimum value is ${field.min}`,
-                  };
-                if (field.max !== undefined)
-                  validationRules.max = {
-                    value: field.max,
-                    message: `Maximum value is ${field.max}`,
-                  };
-              }
-
-              if (safeType === "date") {
-                if (field.min)
-                  validationRules.min = {
-                    value: field.min,
-                    message: `Date should be after ${field.min}`,
-                  };
-                if (field.max)
-                  validationRules.max = {
-                    value: field.max,
-                    message: `Date should be before ${field.max}`,
-                  };
-              }
-
+            if (field.type === "select") {
               return (
-                <div key={key} className={`flex flex-col mb-4`} style={{ gridColumn: `span ${field.column || 12} / span ${field.column || 12}` }} >
-                  <label htmlFor={key} className="mb-1 font-medium text-gray-700 capitalize">
-                    {field.title || key}
-                  </label>
-
-                  {field.type === "select" ? (
-                    <select
-                      id={key}
-                      {...register(key, validationRules)}
-                      className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""
-                        }`}
-                      defaultValue=""
-                    >
-                      <option value="" disabled>{`Select ${field.title}`}</option>
-                      {field.options?.map((opt, idx) => (
-                        <option key={idx} value={opt.value}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                  ) : field.type === "radio" ? (
-                    <div className="flex gap-4 mt-1">
-                      {field.options?.map((opt, idx) => (
-                        <label key={idx} className="flex items-center gap-2 text-sm text-gray-700">
-                          <input type="radio" value={opt.value} {...register(key, validationRules)} />
-                          {opt.label}
-                        </label>
-                      ))}
-                    </div>
-                  ) : (
-                    <input
-                      id={key}
-                      type={safeType}
-                      placeholder={
-                        field.placeholder
-                          ? field.placeholder
-                          : field.title
-                            ? `Enter ${field.title}`
-                            : "Enter a valid value"
-                      }
-                      {...register(key, validationRules)}
-                      className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""
-                        }`}
-                    />
-                  )}
-
-                  {errors?.[key] && (
-                    <span role="alert" className="text-sm text-red-500 mt-1">
-                      {errors[key]?.message}
-                    </span>
-                  )}
+                <div key={key} className={`flex flex-col mb-4`} style={{ gridColumn: `span ${field.column || 12}` }}>
+                  <label htmlFor={key} className="mb-1 font-medium text-gray-700 capitalize">{field.title}</label>
+                  <select {...register(key, validation)} id={key} className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400">
+                    <option value="">Select {field.title}</option>
+                    {field.options?.map((opt, i) => <option key={i} value={opt.value}>{opt.label}</option>)}
+                  </select>
+                  {errors[key] && <span role="alert" className="text-sm text-red-500 mt-1">{errors[key]?.message}</span>}
                 </div>
               );
-            })}
-        </div>
+            }
 
+            if (field.type === "radio") {
+              return (
+                <div key={key} className={`flex flex-col mb-4`} style={{ gridColumn: `span ${field.column || 12}` }}>
+                  <label className="mb-1 font-medium text-gray-700 capitalize">{field.title}</label>
+                  <div className="flex gap-4">
+                    {field.options?.map((opt, i) => (
+                      <label key={i} className="flex items-center gap-2 text-sm text-gray-700">
+                        <input type="radio" value={opt.value} {...register(key, validation)} /> {opt.label}
+                      </label>
+                    ))}
+                  </div>
+                  {errors[key] && <span role="alert" className="text-sm text-red-500 mt-1">{errors[key]?.message}</span>}
+                </div>
+              );
+            }
+
+            return (
+              <div key={key} className={`flex flex-col mb-4`} style={{ gridColumn: `span ${field.column || 12}` }}>
+                <label htmlFor={key} className="mb-1 font-medium text-gray-700 capitalize">{field.title}</label>
+                <input
+                  type={inputType}
+                  id={key}
+                  placeholder={field.placeholder || `Enter ${field.title}`}
+                  {...register(key, validation)}
+                  className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors[key] ? "border-red-500" : ""}`}
+                />
+                {errors[key] && <span role="alert" className="text-sm text-red-500 mt-1">{errors[key]?.message}</span>}
+              </div>
+            );
+          })}
+        </div>
 
         <button
           type="submit"
