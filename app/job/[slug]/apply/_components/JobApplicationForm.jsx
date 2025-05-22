@@ -18,7 +18,7 @@ export default function JobApplicationForm({ id, job }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("data -->", data)
+    // console.log("data -->", data)
     try {
       const formData = new FormData();
       formData.append("jobId", id);
@@ -27,7 +27,6 @@ export default function JobApplicationForm({ id, job }) {
       formData.append("phoneNumber", data.phone);
       formData.append("expectSalary", parseInt(data.salary));
       formData.append("githubUrl", data.github);
-      // formData.append("cpProfile", data.others || "");
       formData.append("cv", data.resume);
 
       // Dynamically add other fields except fixed ones
@@ -273,73 +272,106 @@ export default function JobApplicationForm({ id, job }) {
           )}
         </div>
 
-        {fieldsArray &&
-          fieldsArray?.map(([key, field]) => (
-            <div key={key} className="flex flex-col mb-4">
-              <label htmlFor={key} className="mb-1 font-medium text-gray-700 capitalize">
-                {field.title || key}
-              </label>
+        <div className="grid grid-cols-12 gap-4">
+          {fieldsArray &&
+            fieldsArray.map(([key, field]) => {
+              const allowedInputTypes = ["text", "url", "number", "email", "password", "tel", "date"];
+              const safeType = allowedInputTypes.includes(field.type) ? field.type : "text";
 
-              {field.type === "select" ? (
-                <select
-                  id={key}
-                  {...register(key, {
-                    required: field.required ? `${field.title} is required` : false,
-                  })}
-                  className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""
-                    }`}
-                  defaultValue=""
-                >
-                  <option value="" disabled>{`Select ${field.title}`}</option>
-                  {field.options?.map((opt, idx) => (
-                    <option key={idx} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              ) : field.type === "radio" ? (
-                <div className="flex gap-4 mt-1">
-                  {field.options?.map((opt, idx) => (
-                    <label key={idx} className="flex items-center gap-2 text-sm text-gray-700">
-                      <input
-                        type="radio"
-                        value={opt.value}
-                        {...register(key, {
-                          required: field.required ? `${field.title} is required` : false,
-                        })}
-                      />
-                      {opt.label}
-                    </label>
-                  ))}
+              const validationRules = {
+                required: field.required ? `${field.title} is required` : false,
+              };
+
+              if (safeType === "url") {
+                validationRules.pattern = {
+                  value: /^(https?:\/\/)?[^\s]+$/i,
+                  message: "Enter a valid URL",
+                };
+              }
+
+              if (safeType === "number") {
+                if (field.min !== undefined)
+                  validationRules.min = {
+                    value: field.min,
+                    message: `Minimum value is ${field.min}`,
+                  };
+                if (field.max !== undefined)
+                  validationRules.max = {
+                    value: field.max,
+                    message: `Maximum value is ${field.max}`,
+                  };
+              }
+
+              if (safeType === "date") {
+                if (field.min)
+                  validationRules.min = {
+                    value: field.min,
+                    message: `Date should be after ${field.min}`,
+                  };
+                if (field.max)
+                  validationRules.max = {
+                    value: field.max,
+                    message: `Date should be before ${field.max}`,
+                  };
+              }
+
+              return (
+                <div key={key} className={`flex flex-col mb-4`} style={{ gridColumn: `span ${field.column || 12} / span ${field.column || 12}` }} >
+                  <label htmlFor={key} className="mb-1 font-medium text-gray-700 capitalize">
+                    {field.title || key}
+                  </label>
+
+                  {field.type === "select" ? (
+                    <select
+                      id={key}
+                      {...register(key, validationRules)}
+                      className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""
+                        }`}
+                      defaultValue=""
+                    >
+                      <option value="" disabled>{`Select ${field.title}`}</option>
+                      {field.options?.map((opt, idx) => (
+                        <option key={idx} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                  ) : field.type === "radio" ? (
+                    <div className="flex gap-4 mt-1">
+                      {field.options?.map((opt, idx) => (
+                        <label key={idx} className="flex items-center gap-2 text-sm text-gray-700">
+                          <input type="radio" value={opt.value} {...register(key, validationRules)} />
+                          {opt.label}
+                        </label>
+                      ))}
+                    </div>
+                  ) : (
+                    <input
+                      id={key}
+                      type={safeType}
+                      placeholder={
+                        field.placeholder
+                          ? field.placeholder
+                          : field.title
+                            ? `Enter ${field.title}`
+                            : "Enter a valid value"
+                      }
+                      {...register(key, validationRules)}
+                      className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""
+                        }`}
+                    />
+                  )}
+
+                  {errors?.[key] && (
+                    <span role="alert" className="text-sm text-red-500 mt-1">
+                      {errors[key]?.message}
+                    </span>
+                  )}
                 </div>
-              ) : (
-                <input
-                  id={key}
-                  type={field.type || "text"}
-                  placeholder={field.placeholder || `Enter ${field.title}`}
-                  {...register(key, {
-                    required: field.required ? `${field.title} is required` : false,
-                    pattern:
-                      field.type === "url"
-                        ? {
-                          value: /^(https?:\/\/)?[^\s]+$/,
-                          message: "Enter a valid URL",
-                        }
-                        : undefined,
-                  })}
-                  className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""
-                    }`}
-                />
-              )}
+              );
+            })}
+        </div>
 
-              {errors?.[key] && (
-                <span role="alert" className="text-sm text-red-500 mt-1">
-                  {errors[key]?.message}
-                </span>
-              )}
-            </div>
-          ))
-        }
 
         <button
           type="submit"

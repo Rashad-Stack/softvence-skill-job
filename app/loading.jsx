@@ -6,7 +6,7 @@ export default function Loading() {
       aria-label="Page loading"
       role="status"
     >
-      <div className="flex items-center justify-center h-[calc(100vh-400px)] space-x-2">
+      <div className="flex items-center justify-center h-[calc(100vh-300px)] space-x-2">
         <p className="text-7xl font-thin">L</p>
         <div
           className="size-10 border-8 border-dashed border-[#40854a] rounded-full mt-4 animate-spin"
