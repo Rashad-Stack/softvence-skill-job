@@ -5,12 +5,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function JobApplicationForm({ id, job }) {
-  // console.log("job", job)
+  console.log("job", job)
 
   const fieldsArray = Object.entries(job?.fields);
   // console.log("fields array", fieldsArray)
-
-
 
   const {
     register,
@@ -42,9 +40,6 @@ export default function JobApplicationForm({ id, job }) {
         }
       });
       formData.append("othersFields", JSON.stringify(othersFields));
-
-
-      console.log(formData);
 
       const response = await axiosInstance.post("/job/application/create", formData);
 
@@ -279,31 +274,67 @@ export default function JobApplicationForm({ id, job }) {
         </div>
 
         {fieldsArray &&
-          fieldsArray.map(([key, value]) => (
+          fieldsArray?.map(([key, field]) => (
             <div key={key} className="flex flex-col mb-4">
-              <label
-                htmlFor={key}
-                className="mb-1 font-medium text-gray-700 capitalize"
-              >
-                {key}
+              <label htmlFor={key} className="mb-1 font-medium text-gray-700 capitalize">
+                {field.title || key}
               </label>
 
-              <input
-                id={key}
-                type="url"
-                placeholder={value}
-                {...register(key, {
-                  pattern: {
-                    value: /^(https?:\/\/)?[^\s]+$/,
-                    message: "Enter a valid URL",
-                  },
-                })}
-                className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""}`}
-              />
+              {field.type === "select" ? (
+                <select
+                  id={key}
+                  {...register(key, {
+                    required: field.required ? `${field.title} is required` : false,
+                  })}
+                  className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""
+                    }`}
+                  defaultValue=""
+                >
+                  <option value="" disabled>{`Select ${field.title}`}</option>
+                  {field.options?.map((opt, idx) => (
+                    <option key={idx} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              ) : field.type === "radio" ? (
+                <div className="flex gap-4 mt-1">
+                  {field.options?.map((opt, idx) => (
+                    <label key={idx} className="flex items-center gap-2 text-sm text-gray-700">
+                      <input
+                        type="radio"
+                        value={opt.value}
+                        {...register(key, {
+                          required: field.required ? `${field.title} is required` : false,
+                        })}
+                      />
+                      {opt.label}
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <input
+                  id={key}
+                  type={field.type || "text"}
+                  placeholder={field.placeholder || `Enter ${field.title}`}
+                  {...register(key, {
+                    required: field.required ? `${field.title} is required` : false,
+                    pattern:
+                      field.type === "url"
+                        ? {
+                          value: /^(https?:\/\/)?[^\s]+$/,
+                          message: "Enter a valid URL",
+                        }
+                        : undefined,
+                  })}
+                  className={`border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400 ${errors?.[key] ? "border-red-500" : ""
+                    }`}
+                />
+              )}
 
               {errors?.[key] && (
                 <span role="alert" className="text-sm text-red-500 mt-1">
-                  {errors[key].message}
+                  {errors[key]?.message}
                 </span>
               )}
             </div>
