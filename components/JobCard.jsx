@@ -1,13 +1,30 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
-import CountdownTimer from "./CountdownTimer";
+import dynamic from "next/dynamic"; // ✅ Import dynamic
 import lara from "@/assets/images/lara.png";
+
+// ✅ Dynamically import CountdownTimer with SSR disabled
+const CountdownTimer = dynamic(() => import("./CountdownTimer"), { ssr: false });
 
 export default function JobCard({ job }) {
   const jobTitle = job?.title || "Job Opportunity";
-  const deadlineDate = new Date(job?.deadline).toLocaleDateString();
+
+  const [formattedDeadline, setFormattedDeadline] = useState("");
+
+  useEffect(() => {
+    if (job?.deadline) {
+      const date = new Date(job.deadline);
+      setFormattedDeadline(date.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }));
+    }
+  }, [job?.deadline]);
 
   return (
     <article
@@ -15,7 +32,6 @@ export default function JobCard({ job }) {
       aria-label={`Job card for ${jobTitle}`}
     >
       <div className="relative">
-        {/* Job image */}
         <Image
           src={lara}
           alt={`${jobTitle} image`}
@@ -24,7 +40,6 @@ export default function JobCard({ job }) {
           priority
         />
 
-        {/* Category badge */}
         {job?.category && (
           <div className="py-2 px-4 backdrop-blur-sm bg-white/30 border border-gray-300 text-white text-sm font-semibold absolute top-2 left-2 rounded-full shadow-md">
             <span className="font-pop font-normal text-sm sm:text-base capitalize">
@@ -34,9 +49,7 @@ export default function JobCard({ job }) {
         )}
       </div>
 
-      {/* Job details */}
       <div className="p-4 sm:p-5 relative bg-[#F6FFF8]">
-        {/* Countdown */}
         {job?.deadline && (
           <div className="absolute -top-10 right-2 bg-[#F6FFF8] px-2 py-1 rounded-t-lg text-xs sm:text-sm text-green-600 font-semibold">
             <CountdownTimer deadline={job?.deadline} />
@@ -57,12 +70,13 @@ export default function JobCard({ job }) {
         <div className="flex items-center text-sm mb-4 gap-1 text-[#837E7E] font-pop">
           <IoCalendarOutline />
           <span>Deadline:</span>
-          <time className="ml-1" dateTime={job?.deadline}>
-            {deadlineDate}
-          </time>
+          {formattedDeadline && (
+            <time className="ml-1" dateTime={job?.deadline}>
+              {formattedDeadline}
+            </time>
+          )}
         </div>
 
-        {/* Action buttons */}
         <div className="flex justify-between items-center flex-wrap gap-2">
           <Link
             href={`/job/${job?.slug}`}

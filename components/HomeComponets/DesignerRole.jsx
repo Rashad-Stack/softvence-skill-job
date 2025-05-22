@@ -2,16 +2,20 @@
 
 import "swiper/css";
 import "swiper/css/navigation";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { Navigation, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import JobCard from "../JobCard";
-import { useDeviceType } from "@/hooks/useDeviceType";
+import useDeviceType from "@/hooks/useDeviceType";
 
 export default function DesignerRole({ designerJobs, developer }) {
   const swiperRef = useRef(null);
-  const { isMobile, isTablet, isDesktop } = useDeviceType(); 
+  const { isMobile, isTablet, isDesktop } = useDeviceType();
+  const [isHydrated, setIsHydrated] = useState(false);
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const roleType = developer ? "Developer" : "Designer";
 
@@ -41,7 +45,7 @@ export default function DesignerRole({ designerJobs, developer }) {
           {roleType} Roles
         </h2>
 
-        { ((isMobile && filteredJobs.length > 1) || (isTablet && filteredJobs.length > 2) || (isDesktop && filteredJobs.length > 4)) && (
+        {isHydrated && ((isMobile && filteredJobs.length > 1) || (isTablet && filteredJobs.length > 2) || (isDesktop && filteredJobs.length > 4)) && (
           <div className="flex items-center gap-4" aria-label="Carousel navigation controls">
             <button
               onClick={() => swiperRef.current?.slidePrev()}

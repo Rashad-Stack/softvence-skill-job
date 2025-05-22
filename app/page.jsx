@@ -32,13 +32,13 @@ export default async function Home() {
 
   const { allJobs, errorMessage } = await getAllJOb();
 
-  if (errorMessage) {
-    return (
-      <div className="min-h-[calc(100vh-260px)] flex flex-col items-center justify-center text-center">
-        <h1 className="text-3xl font-bold text-red-600">{errorMessage}</h1>
-      </div>
-    )
-  }
+  // if (errorMessage) {
+  //   return (
+  //     <div className="min-h-[calc(100vh-260px)] flex flex-col items-center justify-center text-center">
+  //       <h1 className="text-3xl font-bold text-red-600">{errorMessage}</h1>
+  //     </div>
+  //   )
+  // }
 
   return (
     <main>

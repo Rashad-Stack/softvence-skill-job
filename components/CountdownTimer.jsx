@@ -1,3 +1,4 @@
+"use client"
 import Countdown from "react-countdown";
 
 export default function CountdownTimer({ deadline }) {
