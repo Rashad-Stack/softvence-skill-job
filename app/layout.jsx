@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* ✅ Canonical Tag here */}
+        {/* Canonical Tag here */}
         <link
           rel="canonical"
           href="https://softvence-skill-job.vercel.app/"
