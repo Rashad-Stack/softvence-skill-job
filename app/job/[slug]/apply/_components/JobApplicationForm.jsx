@@ -5,8 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function JobApplicationForm({ id, job }) {
-  const fieldsArray = Object.entries(job?.fields);
-
+  const fieldsArray = job?.fields ? Object.entries(job?.fields) : [];
   const {
     register,
     handleSubmit,
@@ -158,7 +157,7 @@ export default function JobApplicationForm({ id, job }) {
             if (field.type === "select") {
               return (
                 <div key={key} className={`flex flex-col mb-4`} style={{ gridColumn: `span ${field.column || 12}` }}>
-                  <label htmlFor={key} className="mb-1 font-medium text-gray-700 capitalize">{field.title}</label>
+                  <label htmlFor={key} className="mb-1 font-medium text-gray-700 capitalize">{field.title}  </label>
                   <select {...register(key, validation)} id={key} className="border rounded-lg border-green-300 px-4 py-2 focus:outline-none focus:ring focus:ring-green-400">
                     <option value="">Select {field.title}</option>
                     {field.options?.map((opt, i) => <option key={i} value={opt.value}>{opt.label}</option>)}

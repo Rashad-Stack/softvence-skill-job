@@ -10,13 +10,14 @@ import { LuUserRound } from "react-icons/lu";
 import { PiStudent } from "react-icons/pi";
 import { TiDocumentText } from "react-icons/ti";
 
-const formatDate = (date) =>{
-  if(!date) return "";
+const formatDate = (date) => {
+  if (!date) return "";
   return new Intl.DateTimeFormat("en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
-  }).format(new Date(date))};
+  }).format(new Date(date))
+};
 
 const formatLabel = (str) => str?.replace(/_/g, " ");
 
@@ -33,19 +34,49 @@ export default function JobRequerment({ slug, singleJob }) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              h2: ({...props }) => (
+              h1: ({ ...props }) => (
+                <h1
+                  className="text-[#121212] font-[Poppins] text-4xl font-semibold my-6"
+                  {...props}
+                />
+              ),
+              h2: ({ ...props }) => (
                 <h2
+                  className="text-[#121212] font-[Poppins] text-3xl font-semibold my-5"
+                  {...props}
+                />
+              ),
+              h3: ({ ...props }) => (
+                <h3
                   className="text-[#121212] font-[Poppins] text-2xl font-medium my-4"
                   {...props}
                 />
               ),
-              p: ({...props }) => (
+              h4: ({ ...props }) => (
+                <h4
+                  className="text-[#121212] font-[Poppins] text-xl font-medium my-3"
+                  {...props}
+                />
+              ),
+              h5: ({ ...props }) => (
+                <h5
+                  className="text-[#121212] font-[Poppins] text-lg font-medium my-2"
+                  {...props}
+                />
+              ),
+              h6: ({ ...props }) => (
+                <h6
+                  className="text-[#121212] font-[Poppins] text-base font-medium my-1"
+                  {...props}
+                />
+              ),
+              p: ({ ...props }) => (
                 <p
                   className="text-[#474747] font-[Poppins] text-base font-normal my-2"
                   {...props}
                 />
               ),
-              li: ({...props }) => (
+              li: ({ ...props }) => (
                 <li
                   className="text-[#474747] font-[Poppins] text-base font-normal list-disc ml-6"
                   {...props}
@@ -55,6 +86,7 @@ export default function JobRequerment({ slug, singleJob }) {
           >
             {singleJob?.description}
           </ReactMarkdown>
+
         </div>
 
         {/* RIGHT: Apply Box + Job Overview + Tags */}
@@ -81,7 +113,7 @@ export default function JobRequerment({ slug, singleJob }) {
               * By applying for this job listing, you agree to our Data
             </p>
           </div>
-           {/* Job Overview */}
+          {/* Job Overview */}
           <div className="bg-[#fafffb] p-8 md:w-[488px] mx-auto lg:mx-0 rounded-3xl border border-[#E1F3E4] lg:mt-30">
             <h4 className="text-[#121212] text-[20px] font-medium leading-normal mb-7">
               Job Overview

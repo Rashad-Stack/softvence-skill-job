@@ -110,13 +110,13 @@ export default async function JobDetails({ params }) {
 
   return (
     <main className="mt-[77px] my-14">
-      {/* ✅ Schema.org JSON-LD */}
+      {/* Schema.org JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
 
-      {/* ✅ Page Content */}
+      {/* Page Content */}
       <Banner singleJob={job} />
       <JobRequerment slug={slug} singleJob={job} />
       <Location />
