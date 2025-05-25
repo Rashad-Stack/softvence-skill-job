@@ -15,8 +15,8 @@ export default function Banner({ singleJob }) {
       className="bg-center bg-cover bg-no-repeat w-full"
       style={{ backgroundImage: `url(${bg.src})` }}
     >
-      <div className="container mx-auto p-4">
-        <header className="text-white py-24 max-w-2xl mx-auto md:mx-0">
+      <div className="container mx-auto p-4  py-24">
+        <header className="text-white max-w-2xl pb-10 mx-auto md:mx-0">
           <p className="text-base font-normal" aria-label="Job Category">
             Developer
           </p>
@@ -34,7 +34,7 @@ export default function Banner({ singleJob }) {
           </p>
         </header>
 
-        <div className="flex flex-wrap gap-6 text-white justify-between max-w-2xl mx-auto md:mx-0">
+        <div className="flex flex-wrap gap-6 text-white justify-between max-w-[500px] md:mx-0">
           <div aria-label="Job Location">
             <p className="text-base font-medium">Location</p>
             <p className="text-[#C8C8C8] text-sm">
