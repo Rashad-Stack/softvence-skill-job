@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"; 
+
 import { NextResponse } from "next/server";
 import axiosInstance from "@/lib/axios";
 
@@ -14,8 +16,7 @@ export async function GET() {
     <loc>${baseUrl}/job/${job.slug}</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-      `;
+  </url>`;
     })
     .join("");
 
