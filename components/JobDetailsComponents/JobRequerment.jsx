@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
@@ -22,8 +22,35 @@ const formatDate = (date) => {
 const formatLabel = (str) => str?.replace(/_/g, " ");
 
 export default function JobRequerment({ slug, singleJob }) {
+  const [isExpired, setIsExpired] = useState(false);
+  // check Expired
+  useEffect(() => {
+    if (!singleJob?.deadline) return;
+
+    const deadlineDate = new Date(singleJob?.deadline);
+    const now = new Date();
+
+    // Immediate check
+    if (now > deadlineDate) {
+      setIsExpired(true);
+      return; 
+    }
+
+    // Interval for ongoing checking (e.g. countdown or live change)
+    const interval = setInterval(() => {
+      const now = new Date();
+      if (now > deadlineDate) {
+        setIsExpired(true);
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [singleJob?.deadline]);
 
   const jobTags = [...new Set(["UI", "laravel", "UX", "Developer", "Frontend"])];
+
+
   return (
     <section className="mt-5 container mx-auto lg:relative p-2">
 
@@ -98,12 +125,21 @@ export default function JobRequerment({ slug, singleJob }) {
             </p>
 
             <Link
-              href={`/job/${slug}/apply/${singleJob?.id}`}
-              aria-label="Apply Job"
-              className="text-sm sm:text-base bg-[#038317] text-white px-4 py-2 rounded-lg hover:bg-[#40854a] transition font-pop font-semibold w-full text-center block"
+              href={isExpired ? "#" : `/job/${slug}/apply/${singleJob?.id}`}
+              aria-label={isExpired ? "Application deadline passed" : "Apply Job"}
+              onClick={e => {
+                if (isExpired) e.preventDefault(); // prevent navigation if expired
+              }}
+              className={`text-sm sm:text-base px-4 py-2 rounded-lg font-pop font-semibold w-full text-center block transition
+    ${isExpired
+                  ? "bg-gray-400 cursor-not-allowed text-white hover:bg-gray-400"
+                  : "bg-[#038317] text-white hover:bg-[#40854a]"
+                }`}
             >
               Apply Now
             </Link>
+
+
 
             <p className="text-[#636363] text-center text-base font-normal leading-[132%] tracking[-0.32px] mt-5 mb-6">
               Next, you'll face an assessment to proceed. Apply for one job at a

@@ -7,11 +7,12 @@ import { IoCalendarOutline } from "react-icons/io5";
 import dynamic from "next/dynamic"; // ✅ Import dynamic
 import lara from "@/assets/images/lara.png";
 
-// ✅ Dynamically import CountdownTimer with SSR disabled
+// Dynamically import CountdownTimer with SSR disabled
 const CountdownTimer = dynamic(() => import("./CountdownTimer"), { ssr: false });
 
 export default function JobCard({ job }) {
   const jobTitle = job?.title || "Job Opportunity";
+  const [isExpired, setIsExpired] = useState(false);
 
   const [formattedDeadline, setFormattedDeadline] = useState("");
 
@@ -24,6 +25,31 @@ export default function JobCard({ job }) {
         day: "numeric",
       }));
     }
+  }, [job?.deadline]);
+
+  // check Expired
+  useEffect(() => {
+    if (!job?.deadline) return;
+
+    const deadlineDate = new Date(job?.deadline);
+    const now = new Date();
+
+    // Immediate check
+    if (now > deadlineDate) {
+      setIsExpired(true);
+      return; // no need for interval if already expired
+    }
+
+    // Interval for ongoing checking (e.g., countdown or live change)
+    const interval = setInterval(() => {
+      const now = new Date();
+      if (now > deadlineDate) {
+        setIsExpired(true);
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, [job?.deadline]);
 
   return (
@@ -77,7 +103,7 @@ export default function JobCard({ job }) {
           )}
         </div>
 
-        <div className="flex justify-between items-center flex-wrap gap-2">
+        <div className="flex justify-between items-center flex-wrap gap-2" >
           <Link
             href={`/job/${job?.slug}`}
             className="text-green-700 font-medium underline hover:text-green-900 cursor-pointer"
@@ -87,9 +113,19 @@ export default function JobCard({ job }) {
           </Link>
 
           <Link
-            href={`/job/${job?.slug}/apply/${job?.id}`}
-            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 flex gap-1.5 items-center"
-            aria-label={`Apply now for ${jobTitle}`}
+            href={isExpired ? "#" : `/job/${job?.slug}/apply/${job?.id}`}
+            onClick={(e) => {
+              if (isExpired) {
+                e.preventDefault(); // ⛔ Prevent navigation
+              }
+            }}
+            className={`px-4 py-2 rounded-md flex gap-1.5 items-center 
+    ${isExpired
+                ? "bg-gray-400 cursor-not-allowed text-white"
+                : "bg-green-600 hover:bg-green-700 text-white"
+              }`}
+            aria-disabled={isExpired}
+            aria-label={isExpired ? `Deadline passed for ${jobTitle}` : `Apply now for ${jobTitle}`}
           >
             Apply Now
             <FaArrowRightLong className="-rotate-45 text-sm" />
